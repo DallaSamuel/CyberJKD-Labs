@@ -113,10 +113,10 @@ public-facing services from internal systems.
 
 ## Screenshots
 
-- `screenshots/pfsense-dashboard.png` — pfSense WebGUI dashboard (all interfaces up)
-- `screenshots/firewall-rules-opt1.png` — Firewall rules OPT1 tab
-- `screenshots/kali-ping-tests.png` — Kali ping tests (LAN → DMZ → internet)
-- `screenshots/ubuntu-ping-blocked.png` — Ubuntu DMZ → LAN blocked (100% loss)
+- `pfsense-dashboard.png` — pfSense WebGUI dashboard (all interfaces up)
+- `firewall-rules-opt1.png` — Firewall rules OPT1 tab
+- `kali-ping-tests.png` — Kali ping tests (LAN → DMZ → internet)
+- `ubuntu-ping-blocked.png` — Ubuntu DMZ → LAN blocked (100% loss)
 
 ---
 
