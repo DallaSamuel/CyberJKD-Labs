@@ -113,12 +113,19 @@ public-facing services from internal systems.
 
 ## Screenshots
 
-- `pfsense-dashboard.png` — pfSense WebGUI dashboard (all interfaces up)
-- `firewall-rules-opt1.png` — Firewall rules OPT1 tab
-- `kali-ping-tests.png` — Kali ping tests (LAN → DMZ → internet)
-- `ubuntu-ping-blocked.png` — Ubuntu DMZ → LAN blocked (100% loss)
+![pfSense Dashboard](pfsense-dashboard.png)
+*pfSense WebGUI dashboard — all 3 interfaces up*
 
----
+![Firewall Rules OPT1](firewall-rules-opt1.png)
+*Firewall rules — Block DMZ to LAN (first), Allow DMZ to WAN (second)*
+
+![Kali Ping Tests](kali-ping-test.png)
+*Kali ping tests — LAN to DMZ to internet all working*
+
+![Ubuntu Ping Blocked](ubuntu-ping-blocked.png)
+
+*Ubuntu DMZ to LAN — 100% packet loss, segmentation confirmed*
+
 
 ## References
 
