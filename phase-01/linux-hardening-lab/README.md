@@ -94,6 +94,28 @@ confirming SSH still works correctly after hardening*
 
 ---
 
+## Automation Script
+
+After completing the manual hardening, the automation script from
+[linux-hardening-script](https://github.com/DallaSamuel/linux-hardening-script)
+was deployed and tested on the same VM.
+
+The script performed all hardening steps in a single run:
+- Disabled unnecessary services automatically
+- Hardened SSH configuration
+- Configured UFW firewall
+- Set correct file permissions
+- Ran security checks — empty passwords, UID 0 audit, world-writable files
+- Generated a timestamped report saved to `/var/log/`
+
+### Script Output
+![Automation Script Output](automation-script-output.png)
+
+*Full automated hardening run — "HARDENING COMPLETE — CyberJKD —
+Becoming dangerous through fundamentals."*
+
+---
+
 ## What Threat Does This Defend Against?
 
 A default Ubuntu Server install has misconfigured SSH, no firewall,
