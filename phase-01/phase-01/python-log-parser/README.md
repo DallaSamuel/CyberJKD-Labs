@@ -1,7 +1,9 @@
 # Python Log Parser Lab
 
 **Author:** Dalla Samuel (CyberJKD)
+
 **Date:** May 2nd, 2026
+
 **Platform:** VirtualBox 7.2.6 · Windows 11 · AMD Ryzen 3 PRO 5450U · 32GB RAM
 
 **Roadmap Project:** Phase 01 · Project 04
