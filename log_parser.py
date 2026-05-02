@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # CyberJKD Log Parser
-# Phase 01 · Project 04
+# Phase 01 - Project 04
 # Parses auth.log and detects failed SSH login attempts
 
 import re
@@ -11,13 +11,13 @@ LOG_FILE = "auth.log"
 THRESHOLD = 3
 
 failed_attempts = defaultdict(list)
-pattern = re.compile(r'(\w+\s+\d+\s+\d+:\d+:\d+).*Failed password for (?:invalid user )?(\w+) from ([\d.]+)')
+pattern = re.compile(r'Failed password for (?:invalid user )?(\w+) from ([\d.]+)')
 
 with open(LOG_FILE, 'r') as f:
     for line in f:
         match = pattern.search(line)
         if match:
-            failed_attempts[match.group(3)].append({'ts': match.group(1), 'user': match.group(2)})
+            failed_attempts[match.group(2)].append({'ts': 'N/A', 'user': match.group(1)})
 
 print("=" * 60)
 print("      CyberJKD SSH Log Analysis Report")
