@@ -1,7 +1,9 @@
 # Linux Hardening Lab (VM)
 
 **Author:** Dalla Samuel (CyberJKD)
+
 **Date:** April 27, 2026
+
 **Platform:** VirtualBox 7.2.6 · Windows 11 · AMD Ryzen 3 PRO 5450U · 32GB RAM
 
 **Roadmap project:** Phase 01 · Project 01 ✅ (VM Redo — Final)
