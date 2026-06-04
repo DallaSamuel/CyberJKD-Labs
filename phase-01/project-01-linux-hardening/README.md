@@ -74,22 +74,22 @@ Ensures no known vulnerabilities exist before controls are applied.
 ## Verification Tests
 
 ### Before Hardening — Open Ports
-![Before Hardening](before-hardening-ports.png)
+![Before Hardening](screenshots/before-hardening-ports.png)
 
 *Baseline scan showing port 22 (SSH) and port 53 (DNS) only*
 
 ### After Hardening — Open Ports
-![After Hardening](after-hardening-ports.png)
+![After Hardening](screenshots/after-hardening-ports.png)
 
 *Post-hardening scan — identical, confirming no new attack surface introduced*
 
 ### Firewall Status
-![UFW Status](ufw-status.png)
+![UFW Status](screenshots/ufw-status.png)
 
 *UFW active — default deny incoming, only port 22 allowed*
 
 ### SSH Verification from Kali
-![SSH Verification](ssh-verification.png)
+![SSH Verification](screenshots/ssh-verification.png)
 
 *Successful SSH from Kali (192.168.1.102) to Ubuntu-Hardening (192.168.1.103)
 confirming SSH still works correctly after hardening*
@@ -111,7 +111,7 @@ The script performed all hardening steps in a single run:
 - Generated a timestamped report saved to `/var/log/`
 
 ### Script Output
-![Automation Script Output](automation-script-output.png)
+![Automation Script Output](screenshots/automation-script-output.png)
 
 *Full automated hardening run — "HARDENING COMPLETE — CyberJKD —
 Becoming dangerous through fundamentals."*
