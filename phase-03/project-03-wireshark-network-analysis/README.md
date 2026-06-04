@@ -109,7 +109,7 @@ dns
 - Expanded the Answers section in the packet detail pane _ confirmed A record IP matched nslookup terminal output
 **Screenshot:**
  
-![DNS Capture — Query and Response](02-dns-capture-query-response.png)
+![DNS Capture — Query and Response](screenshots/02-dns-capture-query-response.png)
  
 **Real-world application:** Unexpected DNS queries in a capture — especially to unusual or newly registered domains — are often the first sign of malware calling home to a command and control server. This is exactly what SOC analysts look for in DNS logs.
  
@@ -134,7 +134,7 @@ tcp and ip.addr == [example.com IP from nslookup]
  
 **Screenshot:**
  
-![TCP Three-Way Handshake — SYN SYN-ACK ACK](03-tcp-three-way-handshake.png)
+![TCP Three-Way Handshake — SYN SYN-ACK ACK](screenshots/03-tcp-three-way-handshake.png)
  
 **Real-world application:** SYN with no SYN-ACK = server unreachable or port blocked. RST packet = connection forcibly closed. These two patterns are the first things network engineers look for when diagnosing connectivity failures.
  
@@ -157,7 +157,7 @@ http.request.method == POST
 - Username and password visible in plaintext - exactly as typed into the login form
 **Screenshot:**
  
-![HTTP Cleartext Credentials — POST Request](04-http-cleartext-credentials.png)
+![HTTP Cleartext Credentials — POST Request](screenshots/04-http-cleartext-credentials.png)
  
 **Real-world application:** Without TLS encryption, anyone on the network path — your ISP, a coffee shop router, anyone performing a man-in-the-middle attack - can read credentials exactly as typed. This is how security teams prove the vulnerability exists and demonstrate it to developers who resist adding HTTPS.
  
@@ -178,7 +178,7 @@ http.request.method == POST
 - Full HTTP headers visible - User-Agent, Host, Content-Type, cookies
 **Screenshot:**
  
-![TCP Stream Follow — Full Conversation Reconstructed](05-tcp-stream-follow.png)
+![TCP Stream Follow — Full Conversation Reconstructed](screenshots/05-tcp-stream-follow.png)
  
 **Real-world application:** Individual packets are fragments. The stream view shows the complete conversation - what data was transferred, what commands were sent, what the server responded with. This is the core technique in incident investigation and forensic analysis.
  
