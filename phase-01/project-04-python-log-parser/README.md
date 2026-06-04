@@ -52,7 +52,7 @@ threshold, and outputs a clean analysis report.
 |---|---|---|---|
 | 192.168.1.102 | 10 | wronguser, dalla | FLAGGED |
 
-![Log Parser Output](log-parser-output.png)
+![Log Parser Output](screenshots/log-parser-output.png)
 
 ---
 
