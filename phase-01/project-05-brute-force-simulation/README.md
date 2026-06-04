@@ -56,7 +56,7 @@ hydra -l dalla -P passwords.txt ssh://192.168.1.103
 1 of 1 target successfully completed, 1 valid password found
 
 
-![Hydra Attack Output](hydra-attack-output.png)
+![Hydra Attack Output](screenshots/hydra-attack-output.png)
 
 ---
 
@@ -76,7 +76,7 @@ python3 log_parser.py
 ANALYSIS COMPLETE -- CyberJKD
 
 
-![Log Parser Detection](log-parser-brute-force-detection.png)
+![Log Parser Detection](screenshots/log-parser-brute-force-detection.png)
 
 ---
 
@@ -85,7 +85,7 @@ ANALYSIS COMPLETE -- CyberJKD
 Auth.log confirmed multiple failed attempts from 192.168.1.102
 during the Hydra attack at 2026-05-02 19:18.
 
-![Auth Log Brute Force](auth-log-brute-force.png)
+![Auth Log Brute Force](screenshots/auth-log-brute-force.png)
 
 ---
 
@@ -96,7 +96,7 @@ Blocked the attacker IP using UFW on Ubuntu-Hardening:
 sudo ufw deny from 192.168.1.102 to any
 
 
-![UFW Block Rule](ufw-block-attacker.png)
+![UFW Block Rule](screenshots/ufw-block-attacker.png)
 
 Verified block — Kali SSH attempt refused:
 
@@ -104,7 +104,7 @@ Permission denied, please try again.
 Connection closed by 192.168.1.103 port 22
 
 
-![UFW Block Verified](ufw-block-verified.png)
+![UFW Block Verified](screenshots/ufw-block-verified.png)
 
 ---
 
