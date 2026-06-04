@@ -446,7 +446,8 @@ The skills built here transfer directly to:
 - **Phase 02** - understanding how network devices expose attack surface to SIEM detection
 - **Phase 04** - offensive security, IoT attack surface, embedded device penetration testing
 - **Phase 05** - IoT/edge device security in cloud-connected environments
-- 
+
+  
 🌐 Full roadmap: [dallasamuel.github.io/CyberJKD-Roadmap](https://dallasamuel.github.io/CyberJKD-Roadmap)
  
 🔗 All labs: [github.com/DallaSamuel/CyberJKD-Labs](https://github.com/DallaSamuel/CyberJKD-Labs)
