@@ -67,7 +67,7 @@ Every time the SMS tab was opened on the router's admin web interface, a **"Wait
  
 Factory resets and router restarts did not fix it.
  
-![SMS page frozen — Waiting... overlay](screenshots/00-sms-bug-waiting-frozen.png)
+![SMS page frozen — Waiting... overlay](00-sms-bug-waiting-frozen.webp)
  
 ---
  
@@ -131,7 +131,7 @@ Initial probing of `/goform/` endpoints returned 404 on every call - a common as
  
 **How I found it:** Firefox DevTools → Network tab → XHR filter → navigated to SMS tab → watched requests fire before the freeze.
  
-![Network tab showing real /reqproc/proc_get endpoint](screenshots/04-network-tab-real-api-discovered.png)
+![Network tab showing real /reqproc/proc_get endpoint](04-network-tab-real-api-discovered.png)
  
 **Real API base URL:**
 ```
@@ -152,7 +152,7 @@ curl "http://192.168.0.1/reqproc/proc_get?cmd=sms_data_list&pageIndex=1&pageSize
 # Returns: {"sms_data_list":""}
 ```
  
-![Console XHR spy showing live API calls](screenshots/07-console-xhr-spy-api-calls.png)
+![Console XHR spy showing live API calls](07-console-xhr-spy-api-calls.png)
  
 **Real-world application:** API endpoint enumeration on embedded devices is a core penetration testing technique. Consumer routers, IoT devices, and industrial controllers all expose undocumented APIs that can be discovered this way.
  
@@ -172,7 +172,7 @@ curl -o ~/router_fw/js/set.js  "http://192.168.0.1/js/set.js?random=0.1"
 curl -o ~/router_fw/js/main.js "http://192.168.0.1/js/main.js?random=0.1"
 ```
  
-![Kali — com.js extracted 212,614 bytes](screenshots/01-kali-tools-setup-comjs-extracted.png)
+![Kali — com.js extracted 212,614 bytes](01-kali-tools-setup-comjs-extracted.png)
  
 **Files extracted:**
  
@@ -183,7 +183,7 @@ curl -o ~/router_fw/js/main.js "http://192.168.0.1/js/main.js?random=0.1"
 | `set.js` | 16,097 bytes | Settings and config module |
 | `main.js` | 2,257 bytes | RequireJS entry point |
  
-![All JS files downloaded + firmware.bin probe](screenshots/02-js-files-extracted-firmware-404.png)
+![All JS files downloaded + firmware.bin probe](02-js-files-extracted-firmware-404.png)
  
 **Note:** `firmware.bin` returned 404 - the router does not expose the firmware binary via its web server. Hardware access (UART) is required to dump the flash directly.
  
@@ -288,10 +288,7 @@ open('js/com_patched.js', 'w', encoding='utf-8').write(patched)
 ```
  
 The patched `com_patched.js` file is in the `patch/` folder of this repo.
- 
-**Screenshot - SMS page working after overlay suppression:**
- 
-![SMS page working after patch applied in browser](screenshots/11-sms-page-working-overlay-killed.png)
+
  
 **Real-world application:** Patch development for embedded firmware follows the same logic as any software patch - identify the root cause, write the minimal fix, verify it doesn't break surrounding code. 
 The difference is that firmware patches must account for limited flash write cycles and the risk of bricking the device.
@@ -312,7 +309,7 @@ for page in adm_upgrade adm_software_upload software_upload system_upgrade \
 done
 ```
  
-![Subpage scan - ota_update returns 200](screenshots/05-subpage-scan-ota-update-200.png)
+![Subpage scan - ota_update returns 200](05-subpage-scan-ota-update-200.png)
  
 **Result:** `ota_update: 200` - all others 404.
  
@@ -336,14 +333,14 @@ curl -v -X POST "http://192.168.0.1/cgi-bin/upload/upload.cgi" \
 # +++sockettt upload.cgi success+++
 ```
  
-![FOTA upgrade type confirmed in JS config](screenshots/06-js-config-fota-upgrade-type.png)
+![FOTA upgrade type confirmed in JS config](06-js-config-fota-upgrade-type.png)
  
 **Finding:** Upload returns `{"result":"success"}` but the router's `UPGRADE_TYPE` is set to `"FOTA"` — it expects a proprietary binary package, not a raw JS file. The file was accepted but not applied. 
 Permanent flashing requires either the correct FOTA package format or direct filesystem access via UART.
  
-![Patch verification — not yet flashed](screenshots/08-patch-verification-not-yet-flashed.png)
+![Patch verification — not yet flashed](08-patch-verification-not-yet-flashed.png)
  
-![API endpoint investigation](screenshots/03-api-endpoint-discovery-upgrade-keys.png)
+![API endpoint investigation](03-api-endpoint-discovery-upgrade-keys.png)
  
 **Real-world application:** CGI endpoint discovery on embedded web servers is a standard step in IoT penetration testing. 
 The upload CGI accepting arbitrary files without applying them is itself a security finding — a potential staging area for malicious payloads if the FOTA package format can be reverse engineered.
@@ -356,9 +353,9 @@ The upload CGI accepting arbitrary files without applying them is itself a secur
  
 The router PCB was opened and photographed. PCB label confirms: **FY_CP106_V4**
  
-![PCB opened — ZXIC ZC2535 SoC identified](screenshots/12-pcb-zxic-soc-identified.png)
+![PCB opened — ZXIC ZC2535 SoC identified](12-pcb-zxic-soc-identified.jpg)
  
-![PCB — UART pads located at top edge](screenshots/13-pcb-uart-pads-located.png)
+![PCB — UART pads located at top edge](13-pcb-uart-pads-located.jpg)
  
 **Chips identified:**
  
@@ -370,7 +367,7 @@ The router PCB was opened and photographed. PCB label confirms: **FY_CP106_V4**
  
 **Firmware version confirmed from Device Info page:**
  
-![Device info — firmware version CP106TV4.4](screenshots/10-device-info-firmware-version.png)
+![Device info — firmware version CP106TV4.4](10-device-info-firmware-version.jpg)
  
 **UART pads:** 4 gold pads at top edge of PCB - GND · TX · RX · VCC
  
