@@ -1,7 +1,9 @@
 # Wireshark Packet Analysis Lab
 
 **Author:** Dalla Samuel (CyberJKD)
+
 **Date:** April 28, 2026
+
 **Platform:** VirtualBox 7.2.6 · Windows 11 · AMD Ryzen 3 PRO 5450U · 32GB RAM
 
 **Roadmap project:** Phase 01 · Project 03
@@ -43,11 +45,13 @@ Generated 10 ping packets from Kali to Ubuntu-Hardening.
 **What was observed:**
 - 10 Echo requests from 192.168.1.102 → 192.168.1.103
 - 10 Echo replies from 192.168.1.103 → 192.168.1.102
-- 0% packet loss — clean network communication
+- 0% packet loss - clean network communication
 - TTL: 64 on all packets
 
-![ICMP Capture](wireshark-icmp-capture.png)
-![ICMP Filter](wireshark-icmp-filter.png)
+![ICMP Capture](screenshots/wireshark-icmp-capture.png)
+
+
+![ICMP Filter](screenshots/wireshark-icmp-filter.png)
 
 ---
 
@@ -59,9 +63,9 @@ Initiated an SSH session from Kali into Ubuntu-Hardening.
 - SSHv2 protocol negotiation
 - Diffie-Hellman key exchange visible
 - All session data fully encrypted after handshake
-- No credentials visible in packets — encryption working correctly
+- No credentials visible in packets - encryption working correctly
 
-![SSH Capture](wireshark-ssh-capture.png)
+![SSH Capture](screenshots/wireshark-ssh-capture.png)
 
 ---
 
@@ -69,11 +73,11 @@ Initiated an SSH session from Kali into Ubuntu-Hardening.
 ARP packets captured during communication between machines.
 
 **What was observed:**
-- "Who has 192.168.1.102? Tell 192.168.1.103" — Ubuntu resolving Kali's MAC
-- "192.168.1.102 is at 08:00:27:8a:35:d2" — Kali responding
-- "Who has 192.168.1.1?" — machines checking for pfSense gateway
+- "Who has 192.168.1.102? Tell 192.168.1.103" - Ubuntu resolving Kali's MAC
+- "192.168.1.102 is at 08:00:27:8a:35:d2" - Kali responding
+- "Who has 192.168.1.1?" - machines checking for pfSense gateway
 
-![ARP Capture](wireshark-arp-capture.png)
+![ARP Capture](screenshots/wireshark-arp-capture.png)
 
 ---
 
@@ -81,17 +85,17 @@ ARP packets captured during communication between machines.
 
 | Protocol | Purpose | Security Notes |
 |---|---|---|
-| ICMP | Connectivity testing | Can be used for reconnaissance — monitor in production |
-| SSH | Remote access | Fully encrypted — credentials not visible in capture |
-| ARP | MAC address resolution | No spoofing detected — clean lab environment |
+| ICMP | Connectivity testing | Can be used for reconnaissance - monitor in production |
+| SSH | Remote access | Fully encrypted - credentials not visible in capture |
+| ARP | MAC address resolution | No spoofing detected - clean lab environment |
 
 ---
 
 ## What This Demonstrates
 
-- ICMP can reveal live hosts on a network — useful for recon, reason to restrict ping in production
-- SSH traffic is encrypted end-to-end — Wireshark shows handshake but not credentials
-- ARP operates at Layer 2 — resolves IPs to MACs before communication begins
+- ICMP can reveal live hosts on a network - useful for recon, reason to restrict ping in production
+- SSH traffic is encrypted end-to-end - Wireshark shows handshake but not credentials
+- ARP operates at Layer 2 - resolves IPs to MACs before communication begins
 - Wireshark filters (icmp, tcp.port == 22, arp) isolate specific traffic quickly
 
 ---
@@ -105,10 +109,10 @@ and available in this directory for inspection.
 
 ## Lessons Learned
 
-- Always capture on the correct interface — eth0 for LAN traffic
-- Filter after capture, not before — capture everything, analyse selectively
-- SSH encryption means Wireshark cannot read session content — this is correct behaviour
-- ARP packets reveal MAC addresses — useful for network mapping
+- Always capture on the correct interface - eth0 for LAN traffic
+- Filter after capture, not before - capture everything, analyse selectively
+- SSH encryption means Wireshark cannot read session content - this is correct behaviour
+- ARP packets reveal MAC addresses - useful for network mapping
 - ICMP TTL value of 64 confirms Linux target (Windows uses 128)
 
 ---
