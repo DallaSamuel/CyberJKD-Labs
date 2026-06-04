@@ -49,7 +49,7 @@ from DMZ to LAN.
 
 ## Network Topology
 
-![Network Topology](topology.png)
+![Network Topology](screenshots/topology.png)
 
 *Three-zone architecture: WAN (internet), LAN (Kali), DMZ (Ubuntu Server),
 all routed through pfSense.*
@@ -113,16 +113,16 @@ public-facing services from internal systems.
 
 ## Screenshots
 
-![pfSense Dashboard](pfsense-dashboard.png)
+![pfSense Dashboard](screenshots/pfsense-dashboard.png)
 *pfSense WebGUI dashboard — all 3 interfaces up*
 
-![Firewall Rules OPT1](firewall-rules-opt1.png)
+![Firewall Rules OPT1](screenshots/firewall-rules-opt1.png)
 *Firewall rules — Block DMZ to LAN (first), Allow DMZ to WAN (second)*
 
-![Kali Ping Tests](kali-ping-test.png)
+![Kali Ping Tests](screenshots/kali-ping-test.png)
 *Kali ping tests — LAN to DMZ to internet all working*
 
-![Ubuntu Ping Blocked](ubuntu-ping-blocked.png)
+![Ubuntu Ping Blocked](screenshots/ubuntu-ping-blocked.png)
 
 *Ubuntu DMZ to LAN — 100% packet loss, segmentation confirmed*
 
