@@ -1,4 +1,4 @@
-# Splunk Enterprise SIEM Lab — Detecting Real Attacks on a Cloud VM
+# Splunk Enterprise SIEM Lab - Detecting Real Attacks on a Cloud VM
 
 ![Status](https://img.shields.io/badge/Status-Complete-brightgreen)
 ![Platform](https://img.shields.io/badge/Platform-Azure-0078D4)
