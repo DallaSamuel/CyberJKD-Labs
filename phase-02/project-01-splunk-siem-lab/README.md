@@ -124,7 +124,7 @@ Accessed Splunk at: `http://102.37.19.163:8000`
 
 **Screenshot:**
 
-![Splunk Enterprise Web UI - Hello Administrator](screenshots/02-splunk-web-ui.web)
+![Splunk Enterprise Web UI - Hello Administrator](screenshots/02-splunk-web-ui.webp)
 
 ---
 
@@ -173,7 +173,7 @@ Extracted and ranked all source IPs from connection reset events.
 
 **Screenshot:**
 
-![SPL Queries - Suspicious Events and Top Attacking IPs](screenshots/04-spl-queries.webp)
+![SPL Queries - Suspicious Events and Top Attacking IPs](screenshots/04-spl-querie.webp)
 
 ---
 
