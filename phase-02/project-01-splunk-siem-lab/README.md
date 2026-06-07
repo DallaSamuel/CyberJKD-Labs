@@ -98,7 +98,7 @@ they are mass scanners probing every IP on the internet for open ports. This lab
 
 **Screenshot:**
 
-![Azure VM Deployed and SSH Connected](screenshots/01-azure-vm-ssh-connected.png)
+![Azure VM Deployed and SSH Connected](screenshots/01-azure-vm-ssh-connected.webp)
 
 ---
 
@@ -124,7 +124,7 @@ Accessed Splunk at: `http://102.37.19.163:8000`
 
 **Screenshot:**
 
-![Splunk Enterprise Web UI - Hello Administrator](screenshots/02-splunk-web-ui.png)
+![Splunk Enterprise Web UI - Hello Administrator](screenshots/02-splunk-web-ui.web)
 
 ---
 
@@ -141,7 +141,7 @@ Splunk immediately began indexing 63 events - including user creation, sudo comm
 
 **Screenshot:**
 
-![Auth Log Ingestion - 63 Events Indexed](screenshots/03-auth-log-ingestion.png)
+![Auth Log Ingestion - 63 Events Indexed](screenshots/03-auth-log-ingestion.webp)
 
 ---
 
@@ -173,7 +173,7 @@ Extracted and ranked all source IPs from connection reset events.
 
 **Screenshot:**
 
-![SPL Queries - Suspicious Events and Top Attacking IPs](screenshots/04-spl-queries.png)
+![SPL Queries - Suspicious Events and Top Attacking IPs](screenshots/04-spl-queries.webp)
 
 ---
 
@@ -189,7 +189,7 @@ Extracted and ranked all source IPs from connection reset events.
 
 **Screenshot:**
 
-![Brute Force SSH Detection Alert - Configured](screenshots/05-brute-force-alert.png)
+![Brute Force SSH Detection Alert - Configured](screenshots/05-brute-force-alert.webp)
 
 ---
 
@@ -208,7 +208,7 @@ Bar chart ranking source IPs by number of connection attempts.
 
 **Screenshot:**
 
-![CyberJKD Security Monitor Dashboard](screenshots/06-cyberjkd-security-monitor-dashboard.png)
+![CyberJKD Security Monitor Dashboard](screenshots/06-cyberjkd-security-monitor-dashboard.png.webp)
 
 ---
 
