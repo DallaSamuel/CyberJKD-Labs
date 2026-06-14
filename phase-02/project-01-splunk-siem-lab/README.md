@@ -31,7 +31,7 @@ SOC analysts use every day: ingesting logs, writing detection logic, and turning
 
 | Role | How this applies |
 |------|-----------------|
-| SOC Analyst | Core daily tool — ingest logs, write SPL queries, build detection rules, respond to alerts |
+| SOC Analyst | Core daily tool - ingest logs, write SPL queries, build detection rules, respond to alerts |
 | Cloud Security Engineer | Splunk on Azure is a real enterprise deployment pattern - same architecture used at scale |
 | Junior Security Engineer | SIEM experience is the #1 differentiator at entry level - most candidates have never touched it |
 | Incident Responder | Dashboard and alert workflow mirrors real IR triage process |
