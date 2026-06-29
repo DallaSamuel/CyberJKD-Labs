@@ -208,6 +208,8 @@ The workflow built here transfers directly to:
 🔗 All labs: [github.com/DallaSamuel/CyberJKD-Labs](https://github.com/DallaSamuel/CyberJKD-Labs)
                                                     
 🎥 Full walkthrough: https://youtu.be/82MuDTjKlh0
+
+📄 Viewer Guide (follow along): https://tinyurl.com/ServiceNow-Ticketing-Lab
  
 ---
  
