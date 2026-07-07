@@ -240,7 +240,14 @@ This lab directly maps to:
 - **Phase 02 focus area** - Windows identity management
 - **Phase 05** - Entra ID (cloud AD) uses the same concepts: users, groups, roles, conditional access
 AD is the most targeted system in ransomware attacks. Understanding how to build it is the foundation of knowing how to defend it.
+
  
+🌐 Full roadmap: [dallasamuel.github.io/CyberJKD-Roadmap](https://dallasamuel.github.io/CyberJKD-Roadmap)
+ 
+🔗 All labs: [github.com/DallaSamuel/CyberJKD-Labs](https://github.com/DallaSamuel/CyberJKD-Labs)
+                                                    
+🎥 Full walkthrough: [youtube.com/@CyberJKD](https://www.youtube.com/watch?v=R5Bs3x3Pgg0)
+
 ---
  
 ## References
@@ -250,3 +257,7 @@ AD is the most targeted system in ransomware attacks. Understanding how to build
 - [CloudTechExec Community](https://skool.com/cloudtechexec)
 - [Microsoft AD DS Documentation](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/get-started/virtual-dc/active-directory-domain-services-overview)
 - [Azure Free Account](https://azure.microsoft.com/free)
+
+---
+ 
+*CyberJKD - Becoming dangerous through fundamentals. 🔒*
