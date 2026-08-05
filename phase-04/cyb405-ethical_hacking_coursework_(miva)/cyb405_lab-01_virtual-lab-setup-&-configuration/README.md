@@ -87,7 +87,7 @@ A clean-baseline snapshot taken immediately after a healthy, networked build is 
 3. Left DHCP Server disabled deliberately, in favor of manual static addressing per VM
 **Screenshot:**
  
-![Host-Only network configuration - 192.168.56.1/24, DHCP disabled](screenshots/01-hostonly-network.png.png)
+![Host-Only network configuration - 192.168.56.1/24, DHCP disabled](screenshots/01-hostonly-network.png)
  
 **Real-world application:** This is functionally identical to standing up a private subnet with no internet gateway - 
 the same pattern used for isolated malware analysis sandboxes and pre-production security testing environments.
