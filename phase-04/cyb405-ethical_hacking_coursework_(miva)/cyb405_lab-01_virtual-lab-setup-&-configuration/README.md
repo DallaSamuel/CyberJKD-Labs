@@ -63,7 +63,7 @@ An improperly isolated lab risks leaking scan traffic, exploit payloads, or live
  
 ### Why Host-Only, not NAT or Bridged?
 NAT lets a VM reach the internet through the host but hides it from other VMs on the same subnet by default. 
-Bridged puts a VM directly on the physical LAN — the opposite of isolation. 
+Bridged puts a VM directly on the physical LAN - the opposite of isolation. 
 Host-Only creates a private virtual switch that VMs can join and talk to each other on, with zero path out to the internet or the host's real network. 
 For a lab meant to run exploits and scans safely, Host-Only is the only correct choice.
  
