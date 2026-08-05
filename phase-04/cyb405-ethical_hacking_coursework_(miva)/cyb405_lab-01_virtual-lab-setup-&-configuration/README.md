@@ -87,7 +87,7 @@ A clean-baseline snapshot taken immediately after a healthy, networked build is 
 3. Left DHCP Server disabled deliberately, in favor of manual static addressing per VM
 **Screenshot:**
  
-![Host-Only network configuration - 192.168.56.1/24, DHCP disabled](screenshots/01-hostonly-network-config.png)
+![Host-Only network configuration - 192.168.56.1/24, DHCP disabled](screenshots/01-hostonly-network.png.png)
  
 **Real-world application:** This is functionally identical to standing up a private subnet with no internet gateway - 
 the same pattern used for isolated malware analysis sandboxes and pre-production security testing environments.
@@ -109,7 +109,7 @@ Metasploitable2 (no NetworkManager - predates it) was configured directly via `/
  
 **Screenshot:**
  
-![Kali eth0 confirmed with static IP 192.168.56.102/24](screenshots/02-static-ip-confirmed.png)
+![Kali eth0 confirmed with static IP 192.168.56.102/24](screenshots/02-kali-network-adapter.png)
  
 **Real-world application:** Recognizing that not every system manages networking the same way - NetworkManager vs. 
 legacy interfaces files vs. Windows GUI — is a basic but essential skill when working across mixed-OS infrastructure.
@@ -132,7 +132,7 @@ ping -c 3 192.168.56.103
 - low-effort OS-fingerprinting signal, since each OS family ships a different default TTL
 **Screenshot:**
  
-![Kali successfully pings both Metasploitable2 (TTL=64) and Windows Server (TTL=128)](screenshots/03-cross-vm-connectivity.png)
+![Kali successfully pings both Metasploitable2 (TTL=64) and Windows Server (TTL=128)](screenshots/03-kali-snapshot.png)
  
 **Real-world application:** TTL-based OS fingerprinting is a real (if basic) reconnaissance technique - the same logic underpins more advanced fingerprinting tools like `nmap -O`.
  
@@ -154,7 +154,7 @@ nmap -sS -p- -T4 -oA baseline_scan 192.168.56.0/24
 - Windows Server returned a single filtered port (`5985/wsman`) - a visibly harder target by comparison
 **Screenshot:**
  
-![Full baseline scan results — Metasploitable2's wide-open port footprint](screenshots/04-baseline-scan-results.png)
+![Full baseline scan results — Metasploitable2's wide-open port footprint](screenshots/04-metasploitable-iso-filter-bug.png)
  
 **Real-world application:** This is the exact reconnaissance step a real penetration test begins with - mapping what's alive and what's listening before any exploitation is attempted.
  
@@ -183,7 +183,7 @@ Write-Host "`n=== Done. Current VM states: ===" -ForegroundColor Cyan
  
 **Screenshot:**
  
-![Automation script executed - network verified, all three VMs snapshotted with confirmed UUIDs](screenshots/05-automation-script.png)
+![Automation script executed - network verified, all three VMs snapshotted with confirmed UUIDs](screenshots/05-metasploitable-boot-order-fix.png)
  
 **Real-world application:** Infrastructure-as-code thinking at the smallest possible scale - this is the same instinct behind Terraform/Ansible playbooks in production environments, just applied to a local lab.
  
