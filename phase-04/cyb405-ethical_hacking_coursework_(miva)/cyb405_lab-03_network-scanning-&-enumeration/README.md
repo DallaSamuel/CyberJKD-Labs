@@ -15,7 +15,7 @@
  
 **Roadmap:** [Phase 04 · CYB 405 Lab 03](https://dallasamuel.github.io/CyberJKD-Roadmap)
  
-**YouTube Walkthrough:** [YouTube Link](PASTE_YOUTUBE_LINK_HERE)
+**YouTube Walkthrough:** [YouTube Link](https://youtu.be/VwOAvTOoHn0)
  
 **Viewer Guide:** [Viewer Guide Link](https://tinyurl.com/CYB405-Lab3-Viewer-Guide)
  
