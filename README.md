@@ -25,5 +25,6 @@
 | Phase 02 | Project 03 | ServiceNow Vulnerability Ticketing | ✅ Complete |
 | Phase 03 | Project 02 | Active Directory on Azure | ✅ Complete |
 | Phase 03 | Project 03 | Wireshark & Network Analysis (Azure VM) | ✅ Complete |
+| Phase 06 | Project 01 | Terraform AD DC Deployment (Cloud Tech Techniques) | ✅ Complete |
 ---
 > "Becoming dangerous through fundamentals 🔒." - CyberJKD
