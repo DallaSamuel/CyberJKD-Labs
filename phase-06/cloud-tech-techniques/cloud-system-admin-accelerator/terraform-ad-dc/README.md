@@ -11,11 +11,9 @@
 | **Date** | September 15, 2026 |
 | **Platform** | Microsoft Azure |
 | **Course** | Cloud System Admin Accelerator - Azure Administrator (AZ-104) Labs, Cloud Tech Techniques |
-| **Roadmap** | [dallasamuel.github.io/CyberJKD-Roadmap](https://dallasamuel.github.io/CyberJKD-Roadmap) - Phase 06 · Cloud Tech Techniques · Cloud System Admin Accelerator |
-| **Video Walkthrough** | https://youtu.be/rVksbVzXgRA |
- 
-![Lab location in the CTT classroom](images/00-course-context.png)
-*"Using Terraform To Deploy Your Lab Environment" - Cloud System Admin Accelerator, Cloud Tech Techniques*
+| **Roadmap** | Phase 06 · Cloud Tech Techniques · Cloud System Admin Accelerator |
+| **Video Walkthrough** | [Youtube Video Walkthrough](https://youtu.be/rVksbVzXgRA) |
+
  
 ---
  
@@ -95,7 +93,7 @@ Azure Subscription (cyberjkd-labs)
 ![terraform.tfvars populated](images/08-terraform-tfvars-populated.png)
 ![terraform init success](images/09-terraform-init-success.png)
  
-**E. Deploy** — `terraform init` → `terraform plan` → `terraform apply`. Went through multiple size and region iterations before a clean apply (see Troubleshooting Log).
+**E. Deploy** - `terraform init` → `terraform plan` → `terraform apply`. Went through multiple size and region iterations before a clean apply (see Troubleshooting Log).
  
 ![terraform plan summary](images/10-terraform-plan-summary.png)
  
@@ -112,7 +110,7 @@ Four real failures happened here before a clean apply - full detail in the Troub
  
 ![Server Manager - AD DS and DNS roles installed](images/16-server-manager-roles.png)
  
-**G. Verify AD DS** — Confirmed via `Get-Service NTDS`, `Get-ADDomain`, `Get-ADDomainController -Filter *`, and `Resolve-DnsName corp.cyberjkd.com` — all passed clean.
+**G. Verify AD DS** - Confirmed via `Get-Service NTDS`, `Get-ADDomain`, `Get-ADDomainController -Filter *`, and `Resolve-DnsName corp.cyberjkd.com` - all passed clean.
  
 ![NTDS status + Get-ADDomain output](images/17-verify-ntds-addomain.png)
 ![Get-ADDomainController output](images/18-verify-addomaincontroller.png)
@@ -204,7 +202,17 @@ az resource list --output table
  
 This lab sits under **Phase 06 - Cloud Tech Techniques (CTT) - Cloud System Admin Accelerator** of the [CyberJKD Roadmap](https://dallasamuel.github.io/CyberJKD-Roadmap), a dedicated track for labs completed through Jhante Charles's CTT community, tracked separately from the personal project phases (01–03) and the CYB 405 university coursework. Repo path: `phase-06/cloud-tech-techniques/cloud-system-admin-accelerator/terraform-ad-dc/`.
  
-Not to be confused with Phase 03's **Portfolio Triad I — Infrastructure & Automation (Terraform)**, a larger planned personal project (multi-subnet VNet, least-privilege NSGs, remote state in Azure Blob) that this lab is intentionally scoped narrower than.
+Not to be confused with Phase 03's **Portfolio Triad I - Infrastructure & Automation (Terraform)**, a larger planned personal project (multi-subnet VNet, least-privilege NSGs, remote state in Azure Blob) that this lab is intentionally scoped narrower than.
  
 Per the same completion-batching approach used for CYB 405, Phase 06 will be added to the live roadmap site once the full Cloud System Admin Accelerator course is complete, not lab-by-lab. This is the first entry in that set - infrastructure, AD DS role installation, and identity object creation (OU, user, group) all from one Terraform configuration, torn down clean with zero lingering cost.
+
+##
+ 
+🌐 Full roadmap: [dallasamuel.github.io/CyberJKD-Roadmap](https://dallasamuel.github.io/CyberJKD-Roadmap)
+ 
+🔗 All labs: [github.com/DallaSamuel/CyberJKD-Labs](https://github.com/DallaSamuel/CyberJKD-Labs)
+ 
+---
+ 
+*CyberJKD - Becoming dangerous through fundamentals. 🔒*
  
