@@ -13,18 +13,19 @@
 | **Course** | Cloud System Admin Accelerator - Azure Administrator (AZ-104) Labs, Cloud Tech Techniques |
 | **Roadmap** | Phase 06 · Cloud Tech Techniques · Cloud System Admin Accelerator |
 | **Video Walkthrough** | [Youtube Video Walkthrough](https://youtu.be/rVksbVzXgRA) |
-
  
+
 ---
  
 ## Objective
  
-Deploy a Windows Server 2022 virtual machine on Azure and automatically configure it as an Active Directory Domain Controller - role installation and forest promotion included - 
-in a single `terraform apply`, using a Custom Script Extension rather than any manual Server Manager clicking.
+Deploy a Windows Server 2022 virtual machine on Azure and automatically configure it as an Active Directory Domain Controller - role installation and forest promotion included - in a single `terraform apply`, 
+using a Custom Script Extension rather than any manual Server Manager clicking.
  
 ## Business Problem
  
-Every organization running Windows workloads needs a centralized identity and authentication service. Without one, every server manages its own local accounts, every password change happens machine-by-machine, and there's no way to enforce consistent access policy. 
+Every organization running Windows workloads needs a centralized identity and authentication service. 
+Without one, every server manages its own local accounts, every password change happens machine-by-machine, and there's no way to enforce consistent access policy. 
 Active Directory Domain Services solves this: one directory of users, computers, and groups, with policy flowing outward from the domain controller to every joined machine.
  
 This lab builds that foundation entirely through code - VM provisioning, AD DS role installation, and forest promotion, all from one Terraform configuration.
@@ -50,6 +51,7 @@ This lab builds that foundation entirely through code - VM provisioning, AD DS r
 - **Custom Script Extension** - runs a PowerShell command against the VM as part of the Terraform apply itself, no manual post-deploy steps
 - **Infrastructure as Code (IaC)** - the entire environment (network, VM, role installation) defined declaratively and reproducibly
 - **Terraform state** - what Terraform uses to track what it's actually deployed, and where things go wrong when that tracking drifts from reality (see Troubleshooting)
+
 ## Architecture
  
 ```
@@ -86,7 +88,7 @@ Azure Subscription (cyberjkd-labs)
  
 **C. Scaffold the Project** - Created `~/repos/az-ad-vm` and four empty Terraform files (`main.tf`, `variables.tf`, `outputs.tf`, `terraform.tfvars`).
  
-![Project scaffold — four empty files](images/07-scaffold-files-created.png)
+![Project scaffold - four empty files](images/07-scaffold-files-created.png)
  
 **D. Terraform Configuration** - Populated all four files. `terraform.tfvars` customized with project-specific values (`yourname = "cyberjkd"`, domain `corp.cyberjkd.com`, NetBIOS `CYBERJKD`).
  
@@ -124,6 +126,10 @@ Four real failures happened here before a clean apply - full detail in the Troub
  
 ![terraform destroy complete](images/21-terraform-destroy-complete.png)
 ![az resource list - clean, zero cost](images/22-az-resource-list-clean.png)
+ 
+## Terraform Configuration
+ 
+The actual, working `.tf` files this lab deployed are in [`terraform/`](terraform/) in this same folder - `main.tf`, `variables.tf`, `outputs.tf`, and `terraform.tfvars.example`. Copy the `.example` file to `terraform.tfvars` and fill in your own values; don't retype from the screenshots above, and don't reconstruct from an AI — use these files directly, since they're the exact, tested, single-line-corrected version (see Troubleshooting Log #1 for why that matters).
  
 ## Command Reference
  
@@ -183,7 +189,7 @@ az resource list --output table
  
 **5. Region switch to `eastus2`.** Since total regional vCPU quota was tight in `eastus`, switched `location` to `eastus2` for broader headroom. This required Terraform to destroy and recreate the six already-provisioned network resources, since they were tied to the original region.
  
-**6. Terraform state drift after the region switch.** Mid-apply, resource group and network resources were destroyed and recreated, but the NIC's `subnet_id` reference briefly pointed at a subnet that had just been destroyed — `InvalidResourceReference` / `400 Bad Request`. Resolved with a full `terraform destroy` to clear the drifted state, followed by a single clean `terraform apply` from scratch in `eastus2`.
+**6. Terraform state drift after the region switch.** Mid-apply, resource group and network resources were destroyed and recreated, but the NIC's `subnet_id` reference briefly pointed at a subnet that had just been destroyed - `InvalidResourceReference` / `400 Bad Request`. Resolved with a full `terraform destroy` to clear the drifted state, followed by a single clean `terraform apply` from scratch in `eastus2`.
  
 **7. `SkuNotAvailable: Standard_B2s` in `eastus2` as well.** Even the fallback burstable size had no regional capacity. Rather than guess further, ran `az vm list-skus --location eastus2 --size Standard_D --all --output table` and filtered for `Restrictions: None` to find a size guaranteed deployable - landed on `Standard_D2s_v7`.
  
@@ -195,19 +201,21 @@ az resource list --output table
  
 - **NSG rule is wide open.** `source_address_prefix = "*"` allows RDP from any IP. Production would restrict this to a specific management IP range or route RDP through a bastion host instead of exposing port 3389 directly.
 - **Secrets live in plaintext in `terraform.tfvars`.** `admin_password` and `dsrm_password` are stored unencrypted in a file that's easy to accidentally commit. Production would pull these from Azure Key Vault via a data source, and `terraform.tfvars` would be gitignored, never committed.
-- **No remote state backend.** State was tracked locally on one machine — exactly what caused the drift issue in this lab. Production would use an Azure Storage Account backend with state locking, so state can't be edited by two people (or two terminal sessions) at once.
+- **No remote state backend.** State was tracked locally on one machine - exactly what caused the drift issue in this lab. Production would use an Azure Storage Account backend with state locking, so state can't be edited by two people (or two terminal sessions) at once.
 - **Single domain controller, no redundancy.** One DC is a single point of failure. Production would deploy at least two DCs across availability zones for forest resilience.
 - **DSRM password has no recovery path.** It's a plaintext value with no retrieval option post-deployment. Production would store it in Key Vault immediately, not just note it down manually.
 ## Connection to Roadmap
  
-This lab sits under **Phase 06 - Cloud Tech Techniques (CTT) - Cloud System Admin Accelerator** of the [CyberJKD Roadmap](https://dallasamuel.github.io/CyberJKD-Roadmap), a dedicated track for labs completed through Jhante Charles's CTT community, tracked separately from the personal project phases (01–03) and the CYB 405 university coursework. Repo path: `phase-06/cloud-tech-techniques/cloud-system-admin-accelerator/terraform-ad-dc/`.
+This lab sits under **Phase 06 - Cloud Tech Techniques (CTT) - Cloud System Admin Accelerator** of the [CyberJKD Roadmap](https://dallasamuel.github.io/CyberJKD-Roadmap), a dedicated track for labs completed through Jhante Charles's CTT community, tracked separately from the personal project phases (01-03) and the CYB 405 university coursework. Repo path: `phase-06/cloud-tech-techniques/cloud-system-admin-accelerator/terraform-ad-dc/`.
  
 Not to be confused with Phase 03's **Portfolio Triad I - Infrastructure & Automation (Terraform)**, a larger planned personal project (multi-subnet VNet, least-privilege NSGs, remote state in Azure Blob) that this lab is intentionally scoped narrower than.
  
 Per the same completion-batching approach used for CYB 405, Phase 06 will be added to the live roadmap site once the full Cloud System Admin Accelerator course is complete, not lab-by-lab. This is the first entry in that set - infrastructure, AD DS role installation, and identity object creation (OU, user, group) all from one Terraform configuration, torn down clean with zero lingering cost.
 
+
 ##
- 
+
+
 🌐 Full roadmap: [dallasamuel.github.io/CyberJKD-Roadmap](https://dallasamuel.github.io/CyberJKD-Roadmap)
  
 🔗 All labs: [github.com/DallaSamuel/CyberJKD-Labs](https://github.com/DallaSamuel/CyberJKD-Labs)
