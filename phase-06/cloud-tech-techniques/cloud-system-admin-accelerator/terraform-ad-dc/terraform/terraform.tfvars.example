@@ -1,0 +1,9 @@
+# Copy this file to terraform.tfvars and fill in your own values.
+# terraform.tfvars is gitignored — never commit real passwords.
+
+yourname       = "yourname"                  # used in every resource name — pick something unique
+location       = "eastus2"                   # region with capacity — check az vm list-usage first if unsure
+admin_password = "REPLACE-ME-12chars-Aa1!"   # 12+ chars, 3 of: upper/lower/number/symbol
+dsrm_password  = "REPLACE-ME-DIFFERENT-Aa1!" # must differ from admin_password — cannot be retrieved after deploy
+domain_name    = "corp.yourname.com"
+domain_netbios = "YOURNAME"                  # max 15 characters
