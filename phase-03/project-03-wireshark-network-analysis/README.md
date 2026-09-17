@@ -243,4 +243,4 @@ The Wireshark mental model built here transfers directly to:
  
 ---
  
-*CyberJKD — Becoming dangerous through fundamentals. 🔒*
+*CyberJKD - Becoming dangerous through fundamentals. 🔒*
