@@ -24,7 +24,8 @@ so lab scripting and documentation can happen in one environment instead of jugg
 ## Business Problem
 
 Editing files over a raw SSH session (`nano`/`vim`) works, but it's slow and error-prone for anything beyond a quick edit - no IntelliSense, no syntax highlighting, no easy multi-file search. 
-IT and cloud teams standardize on an editor like VS Code with Remote Development extensions specifically so engineers can work directly on remote hosts (servers, VMs, containers) with the full editor experience, without files ever needing to be copied back and forth.
+IT and cloud teams standardize on an editor like VS Code with Remote Development extensions specifically so engineers can work directly on remote hosts (servers, VMs, containers) with the full editor experience, 
+without files ever needing to be copied back and forth.
 
 This is the **VSCode Guide** module of Jhante Charles's Cloud System Admin Accelerator, under "How To Automate The VM Deployment" - the same category as the Terraform AD DC lab. 
 Where that lab automated *provisioning* a VM, this module sets up the *editor* used to write and maintain that kind of infrastructure code and to work directly on deployed VMs going forward - 
@@ -53,6 +54,8 @@ including two real failures hit and resolved along the way, not just a clean ins
 
 ## Architecture
 
+![VS Code Remote-SSH Setup Architecture](images/16-architecture-diagram.png)
+
 ```
 Windows 11 Host (HP EliteBook 835 G8)
    │
@@ -77,7 +80,7 @@ Windows 11 Host (HP EliteBook 835 G8)
 
 ![Fresh VS Code install, Restricted Mode banner, Docker extension prompt](images/01-vscode-initial-launch.png)
 
-**B. Verify Git** — Ran `git --version` in the integrated terminal (`` Ctrl+` ``); command not recognized, confirming Git wasn't installed.
+**B. Verify Git** - Ran `git --version` in the integrated terminal (`` Ctrl+` ``); command not recognized, confirming Git wasn't installed.
 
 ![git --version not recognized](images/02-git-not-installed.png)
 
@@ -92,11 +95,11 @@ Windows 11 Host (HP EliteBook 835 G8)
 
 **E. Locate the Repo** - No local clone of CyberJKD-Labs existed yet on this device - confirmed via File Explorer against the `Documents\CyberJKD` folder, which held other CyberJKD project folders but not this repo.
 
-![CyberJKD folder contents — no Labs repo present](images/06-folder-before-clone.png)
+![CyberJKD folder contents - no Labs repo present](images/06-folder-before-clone.png)
 
 **F. Clone CyberJKD-Labs** - First attempt failed mid-transfer with an RPC/buffer error on a 1249-object repo. Fixed by raising Git's HTTP post-buffer size, then re-ran the clone clean.
 
-![Failed clone — RPC error, early EOF](images/07-clone-rpc-error.png)
+![Failed clone - RPC error, early EOF](images/07-clone-rpc-error.png)
 ![Successful clone after buffer fix](images/08-clone-success.png)
 
 **G. Open and Trust the Repo** - File → Open Folder → `CyberJKD-Labs`. Cloning directly auto-trusted the workspace; Restricted Mode banner did not reappear.
@@ -106,11 +109,9 @@ Windows 11 Host (HP EliteBook 835 G8)
 **H. Configure Remote-SSH** - Added `kali` and `ubuntu-hardening` host entries to `~/.ssh/config`. First connection attempt to `kali` used the wrong IP (home-lab range instead of the CYB 405 host-only range) and timed out; corrected to `192.168.56.102`.
 
 ![SSH config with both host entries](images/10-ssh-config.png)
-![Connection timed out - wrong IP](images/11-connection-timeout.png)
+![Connection timed out — wrong IP](images/11-connection-timeout.png)
 
-**I. Diagnose and Fix Connection Refused** - After correcting the IP, VS Code returned "Permission denied" with no password prompt - a stale extension state, not a real auth failure. 
-Ran a raw `ssh kali@192.168.56.102` directly in the terminal to get the real error: **Connection refused, port 22** - meaning Kali's SSH service wasn't running at all (Kali does not start SSH by default). 
-Started and enabled the service directly on the Kali VM, then confirmed the raw SSH connection worked.
+**I. Diagnose and Fix Connection Refused** - After correcting the IP, VS Code returned "Permission denied" with no password prompt - a stale extension state, not a real auth failure. Ran a raw `ssh kali@192.168.56.102` directly in the terminal to get the real error: **Connection refused, port 22** - meaning Kali's SSH service wasn't running at all (Kali does not start SSH by default). Started and enabled the service directly on the Kali VM, then confirmed the raw SSH connection worked.
 
 ![Permission denied via Remote-SSH extension](images/12-permission-denied.png)
 ![Raw ssh - connection refused, port 22](images/13-connection-refused.png)
@@ -145,7 +146,7 @@ ssh kali@192.168.56.102
 ```
 
 ```bash
-# On the Kali VM itself — start and persist the SSH service
+# On the Kali VM itself - start and persist the SSH service
 sudo systemctl start ssh
 sudo systemctl enable ssh
 sudo systemctl status ssh
@@ -164,22 +165,15 @@ sudo systemctl status ssh
 
 ## Troubleshooting Log
 
-**1. `git clone` failed mid-transfer - RPC error, early EOF.** Cloning the 1249-object CyberJKD-Labs repo over HTTPS failed partway through with `error: RPC failed; 
-curl 18 transfer closed with outstanding read data remaining` and `fatal: early EOF`. This is a known Git-over-HTTPS issue on larger repos where the default buffer size is too small for the transfer. 
-Fixed with `git config --global http.postBuffer 524288000` (500 MB buffer), then re-ran the clone clean.
+**1. `git clone` failed mid-transfer - RPC error, early EOF.** Cloning the 1249-object CyberJKD-Labs repo over HTTPS failed partway through with `error: RPC failed; curl 18 transfer closed with outstanding read data remaining` and `fatal: early EOF`. This is a known Git-over-HTTPS issue on larger repos where the default buffer size is too small for the transfer. Fixed with `git config --global http.postBuffer 524288000` (500 MB buffer), then re-ran the clone clean.
 
-**2. Commands silently combined when pasted.** Running `git config --global http.postBuffer 524288000 git clone https://...` as one pasted block caused PowerShell to treat the clone command as extra arguments to `git config`, 
-producing `error: no action specified`. Fixed by running each command on its own line, waiting for the prompt to return between them.
+**2. Commands silently combined when pasted.** Running `git config --global http.postBuffer 524288000 git clone https://...` as one pasted block caused PowerShell to treat the clone command as extra arguments to `git config`, producing `error: no action specified`. Fixed by running each command on its own line, waiting for the prompt to return between them.
 
-**3. Remote-SSH connection timed out to the wrong network.** Initial SSH config pointed Kali at `192.168.1.102` (the home-lab network range used by other, unrelated VMs). 
-Kali was actually running on the CYB 405 host-only lab network at `192.168.56.102`. Fixed by correcting the `HostName` value in `~/.ssh/config`.
+**3. Remote-SSH connection timed out to the wrong network.** Initial SSH config pointed Kali at `192.168.1.102` (the home-lab network range used by other, unrelated VMs). Kali was actually running on the CYB 405 host-only lab network at `192.168.56.102`. Fixed by correcting the `HostName` value in `~/.ssh/config`.
 
-**4. "Permission denied" with no password prompt.** After correcting the IP, the Remote-SSH extension returned `Could not establish connection to "kali": Permission denied`
-without ever prompting for a password - misleading, since it suggested an authentication problem. Bypassing the extension with a raw `ssh kali@192.168.56.102` in the terminal revealed the real issue.
+**4. "Permission denied" with no password prompt.** After correcting the IP, the Remote-SSH extension returned `Could not establish connection to "kali": Permission denied` without ever prompting for a password - misleading, since it suggested an authentication problem. Bypassing the extension with a raw `ssh kali@192.168.56.102` in the terminal revealed the real issue.
 
-**5. Raw SSH returned "Connection refused, port 22."** This confirmed the actual root cause: Kali's SSH server wasn't running at all - Kali does not enable or auto-start SSH by default on a fresh install. 
-Fixed directly on the Kali VM with `sudo systemctl start ssh` (for the current session) and `sudo systemctl enable ssh` (to persist across reboots). 
-Raw SSH then connected and authenticated cleanly, and the Remote-SSH extension connected successfully immediately after.
+**5. Raw SSH returned "Connection refused, port 22."** This confirmed the actual root cause: Kali's SSH server wasn't running at all - Kali does not enable or auto-start SSH by default on a fresh install. Fixed directly on the Kali VM with `sudo systemctl start ssh` (for the current session) and `sudo systemctl enable ssh` (to persist across reboots). Raw SSH then connected and authenticated cleanly, and the Remote-SSH extension connected successfully immediately after.
 
 ## What I'd Change for Production
 
@@ -190,11 +184,9 @@ Raw SSH then connected and authenticated cleanly, and the Remote-SSH extension c
 
 ## Connection to Roadmap
 
-This lab sits under **Phase 06 - Cloud Tech Techniques (CTT)  Cloud System Admin Accelerator** of the [CyberJKD Roadmap](https://dallasamuel.github.io/CyberJKD-Roadmap), the same track as the Terraform AD DC lab, 
-specifically the **VSCode Guide** module under "How To Automate The VM Deployment." Repo path: `phase-06/cloud-tech-techniques/cloud-system-admin-accelerator/vscode-guide/`.
+This lab sits under **Phase 06 - Cloud Tech Techniques (CTT) - Cloud System Admin Accelerator** of the [CyberJKD Roadmap](https://dallasamuel.github.io/CyberJKD-Roadmap), the same track as the Terraform AD DC lab, specifically the **VSCode Guide** module under "How To Automate The VM Deployment." Repo path: `phase-06/cloud-tech-techniques/cloud-system-admin-accelerator/vscode-guide/`.
 
-Per the same completion-batching approach used elsewhere in Phase 06, this gets added to the live roadmap site once the full Cloud System Admin Accelerator course is complete, not module-by-module. It also directly supports CYB 405 lab execution going forward, 
-since Remote-SSH into the Kali VM is now the working setup for that coursework too - though its primary home is this course track, not CYB 405.
+Per the same completion-batching approach used elsewhere in Phase 06, this gets added to the live roadmap site once the full Cloud System Admin Accelerator course is complete, not module-by-module. It also directly supports CYB 405 lab execution going forward, since Remote-SSH into the Kali VM is now the working setup for that coursework too - though its primary home is this course track, not CYB 405.
 
 ---
 
