@@ -164,7 +164,7 @@ sudo systemctl status ssh
 
 ## Troubleshooting Log
 
-**1. `git clone` failed mid-transfer — RPC error, early EOF.** Cloning the 1249-object CyberJKD-Labs repo over HTTPS failed partway through with `error: RPC failed; 
+**1. `git clone` failed mid-transfer - RPC error, early EOF.** Cloning the 1249-object CyberJKD-Labs repo over HTTPS failed partway through with `error: RPC failed; 
 curl 18 transfer closed with outstanding read data remaining` and `fatal: early EOF`. This is a known Git-over-HTTPS issue on larger repos where the default buffer size is too small for the transfer. 
 Fixed with `git config --global http.postBuffer 524288000` (500 MB buffer), then re-ran the clone clean.
 
