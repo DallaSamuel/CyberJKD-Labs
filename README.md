@@ -1,15 +1,15 @@
 # CyberJKD Labs
-
+ 
 ---
-
+ 
 **Author:** Dalla Samuel (CyberJKD)
-
+ 
 **Focus:** Cloud Security Engineering
-
+ 
 **Roadmap:** [CyberJKD Roadmap](https://dallasamuel.github.io/CyberJKD-Roadmap)
-
+ 
 ---
-
+ 
 ## Labs
 | Phase | Project | Lab | Status |
 |-------|---------|-----|--------|
@@ -26,5 +26,7 @@
 | Phase 03 | Project 02 | Active Directory on Azure | ✅ Complete |
 | Phase 03 | Project 03 | Wireshark & Network Analysis (Azure VM) | ✅ Complete |
 | Phase 06 | Project 01 | Terraform AD DC Deployment (Cloud Tech Techniques) | ✅ Complete |
+| Phase 06 | Project 02 | VS Code Remote-SSH Setup (VSCode Guide) | ✅ Complete |
 ---
 > "Becoming dangerous through fundamentals 🔒." - CyberJKD
+> 
