@@ -50,6 +50,8 @@ This lab builds that foundation entirely through code - VM provisioning, AD DS r
 
 ## Architecture
 
+![Terraform Active Directory - Domain Controller Architecture](images/23-architecture-diagram.png)
+
 ```
 Terraform (local)
    │
