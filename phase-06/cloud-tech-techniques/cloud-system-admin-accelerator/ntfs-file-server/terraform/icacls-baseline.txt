@@ -1,0 +1,24 @@
+﻿C:\Shares\Finance LAB\GRP_IT:(OI)(CI)(F)
+                  LAB\GRP_HR:(OI)(CI)(R)
+                  LAB\GRP_Finance:(OI)(CI)(M)
+                  NT AUTHORITY\SYSTEM:(OI)(CI)(F)
+                  BUILTIN\Administrators:(OI)(CI)(F)
+
+Successfully processed 1 files; Failed processing 0 files
+C:\Shares\HR LAB\GRP_IT:(OI)(CI)(F)
+             LAB\GRP_HR:(OI)(CI)(M)
+             NT AUTHORITY\SYSTEM:(OI)(CI)(F)
+             BUILTIN\Administrators:(OI)(CI)(F)
+
+Successfully processed 1 files; Failed processing 0 files
+C:\Shares\Sales LAB\GRP_IT:(OI)(CI)(F)
+                LAB\GRP_Sales:(OI)(CI)(M)
+                NT AUTHORITY\SYSTEM:(OI)(CI)(F)
+                BUILTIN\Administrators:(OI)(CI)(F)
+
+Successfully processed 1 files; Failed processing 0 files
+C:\Shares\IT LAB\GRP_IT:(OI)(CI)(F)
+             NT AUTHORITY\SYSTEM:(OI)(CI)(F)
+             BUILTIN\Administrators:(OI)(CI)(F)
+
+Successfully processed 1 files; Failed processing 0 files

@@ -1,0 +1,5 @@
+location       = "Central US"
+server_vm_size = "Standard_D2s_v7"
+client_vm_size = "Standard_D2s_v7"
+rdp_source     = "YOUR_PUBLIC_IP/32"
+alert_email    = "your-email@example.com"
