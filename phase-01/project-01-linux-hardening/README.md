@@ -6,7 +6,7 @@
 
 **Platform:** VirtualBox 7.2.6 · Windows 11 · AMD Ryzen 3 PRO 5450U · 32GB RAM
 
-**Roadmap project:** Phase 01 · Project 01 ✅ (VM Redo — Final)
+**Roadmap project:** Phase 01 · Project 01 ✅ (VM Redo - Final)
 
 ---
 
@@ -113,7 +113,7 @@ The script performed all hardening steps in a single run:
 ### Script Output
 ![Automation Script Output](screenshots/automation-script-output.png)
 
-*Full automated hardening run — "HARDENING COMPLETE — CyberJKD —
+*Full automated hardening run - "HARDENING COMPLETE - CyberJKD -
 Becoming dangerous through fundamentals."*
 
 ---
