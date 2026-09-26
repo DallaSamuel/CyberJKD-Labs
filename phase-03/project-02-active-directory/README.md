@@ -38,7 +38,7 @@ This is not legacy technology. Hybrid environments sync on-premises AD to Micros
 | Component | Detail |
 |---|---|
 | Cloud Platform | Microsoft Azure (Free Account) |
-| VM Size | Standard_B2s — 2 vCPU, 4GB RAM |
+| VM Size | Standard_B2s - 2 vCPU, 4GB RAM |
 | OS | Windows Server 2025 Datacenter Gen2 |
 | Domain | lab.local |
 | Cost | $0 - fully within free tier |
