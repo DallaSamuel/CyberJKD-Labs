@@ -1,4 +1,4 @@
-# NTFS File Server Lab — Hardened Windows File Server on Azure
+# NTFS File Server Lab - Hardened Windows File Server on Azure
 
 ![Terraform](https://img.shields.io/badge/Terraform-v1.16.2-844FBA?style=flat-square&logo=terraform)
 ![Azure](https://img.shields.io/badge/Azure-centralus-0078D4?style=flat-square&logo=microsoftazure)
