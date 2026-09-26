@@ -154,7 +154,7 @@ nmap -sS -p- -T4 -oA baseline_scan 192.168.56.0/24
 - Windows Server returned a single filtered port (`5985/wsman`) - a visibly harder target by comparison
 **Screenshot:**
  
-![Full baseline scan results — Metasploitable2's wide-open port footprint](screenshots/04-metasploitable-iso-filter-bug.png)
+![Full baseline scan results - Metasploitable2's wide-open port footprint](screenshots/04-metasploitable-iso-filter-bug.png)
  
 **Real-world application:** This is the exact reconnaissance step a real penetration test begins with - mapping what's alive and what's listening before any exploitation is attempted.
  
@@ -247,7 +247,7 @@ Real infrastructure work involves real errors - documented here rather than edit
 ## Connection to Roadmap
  
 This lab is part of **CYB 405 - Introduction to Ethical Hacking**, Miva Open University's mid-semester laboratory assessment series (8 core labs + 2 bonus challenges), 
-tracked as a dedicated sub-block inside **Phase 04 — Controlled Offensive + Multi-Cloud** on the CyberJKD Cloud Security Engineering roadmap - 
+tracked as a dedicated sub-block inside **Phase 04 - Controlled Offensive + Multi-Cloud** on the CyberJKD Cloud Security Engineering roadmap - 
 sitting alongside the self-directed offensive work in that same phase, since this is formally graded coursework reinforcing the same Precision Striker skill set.
  
 The environment built here - isolated networking, static addressing, snapshot discipline - is the foundation every subsequent lab in this series builds on:
