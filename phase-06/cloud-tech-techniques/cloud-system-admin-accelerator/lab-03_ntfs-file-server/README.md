@@ -74,7 +74,7 @@ DC01 runs Active Directory, DNS, Group Policy, and the AGDLP group structure. FS
 
 ## Exercises
 
-### Phase A — Base Deployment and Terraform Hardening
+### Phase A - Base Deployment and Terraform Hardening
 
 **A. Pre-flight checks.** Windows 11's default VM image SKU (`win11-23h2-pro`) had been retired from the marketplace. Checked quota across every VM family before picking a size rather than guessing size by size - `Standard_Basv2` came back at zero, and the next candidate, `Standard_B2s`, turned out to be zero too, both ruled out before settling on `Standard_D2s_v7`.
 
