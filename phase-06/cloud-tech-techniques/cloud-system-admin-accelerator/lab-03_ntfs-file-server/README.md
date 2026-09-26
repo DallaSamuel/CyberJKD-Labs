@@ -9,7 +9,7 @@
 | | |
 |---|---|
 | **Author** | Dalla Samuel (CyberJKD) |
-| **Date** | September 21 – 24, 2026 |
+| **Date** | September 21 - 24, 2026 |
 | **Platform** | Microsoft Azure |
 | **Course** | Cloud System Admin Accelerator - Cloud Tech Techniques |
 | **Roadmap** | Phase 06 · Cloud Tech Techniques · Cloud System Admin Accelerator |
@@ -31,7 +31,7 @@ Every organization running Windows file shares needs the same three things: user
 | Terraform | v1.16.2 |
 | Azure CLI | current, `cyberjkd-labs` subscription |
 | Region | `Central US` |
-| VM Size | `Standard_D2s_v7` (see Troubleshooting Log #2 — B-series and Basv2 had zero quota) |
+| VM Size | `Standard_D2s_v7` (see Troubleshooting Log #2 - B-series and Basv2 had zero quota) |
 | DC01 / FS01 | Windows Server 2022 Datacenter (Azure Edition), no public IP |
 | CLIENT01 | Windows 11 Pro (`win11-25h2-pro` - see Troubleshooting Log #1), single public IP, locked to admin `/32` |
 | Resource Group | `RG-FileServerLab` |
