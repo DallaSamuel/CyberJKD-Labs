@@ -23,8 +23,8 @@ from DMZ to LAN.
 | pfSense (WAN) | Internet gateway via NAT | 10.0.2.15 |
 | pfSense (LAN) | LAN gateway | 192.168.1.1 |
 | pfSense (DMZ) | DMZ gateway | 192.168.2.1 |
-| Kali Linux | Attacker VM — LAN zone | 192.168.1.101 |
-| Ubuntu Server | Target VM — DMZ zone | 192.168.2.101 |
+| Kali Linux | Attacker VM - LAN zone | 192.168.1.101 |
+| Ubuntu Server | Target VM - DMZ zone | 192.168.2.101 |
 
 ---
 
@@ -58,14 +58,14 @@ all routed through pfSense.*
 
 ## Firewall Rules
 
-**OPT1 (DMZ) — in order of processing:**
+**OPT1 (DMZ) - in order of processing:**
 
 | Priority | Action | Source | Destination | Protocol |
 |---|---|---|---|---|
 | 1 | Block | OPT1 subnets | LAN subnets | Any |
 | 2 | Pass | OPT1 subnets | Any | Any |
 
-Rule order is critical — pfSense processes top to bottom, first match wins.
+Rule order is critical - pfSense processes top to bottom, first match wins.
 The Block rule must sit above the Pass rule or DMZ traffic reaches LAN before
 being stopped.
 
@@ -82,14 +82,14 @@ ping -c 4 8.8.8.8         → 0% packet loss ✅ (internet reachable)
 **From Ubuntu (DMZ):**
 
 ping -c 4 192.168.2.1     → 0% packet loss ✅ (pfSense DMZ reachable)
-ping -c 4 192.168.1.1     → 100% packet loss ✅ (LAN blocked — rule working)
+ping -c 4 192.168.1.1     → 100% packet loss ✅ (LAN blocked - rule working)
 
 ---
 
 ## What Threat Does This Defend Against?
 
-If Ubuntu Server is compromised — through a web vulnerability,
-misconfiguration, or malware — the attacker gains a foothold in the DMZ.
+If Ubuntu Server is compromised - through a web vulnerability,
+misconfiguration, or malware - the attacker gains a foothold in the DMZ.
 Without segmentation, they could pivot laterally into the LAN and attack
 Kali or any other internal machine.
 
@@ -103,28 +103,28 @@ public-facing services from internal systems.
 ## Lessons Learned
 
 - pfSense interface assignment must be done before first boot config
-- Rule order matters — Block DMZ→LAN must sit above Allow DMZ→WAN
+- Rule order matters - Block DMZ→LAN must sit above Allow DMZ→WAN
 - Static IP assignment via console is required before WebGUI is reachable
 - VirtualBox boot order does not persist while VM is running — power off first
 - Always save VM state before shutting down to preserve lab progress
-- pfSense must always start first — it is the gateway for all other VMs
+- pfSense must always start first - it is the gateway for all other VMs
 
 ---
 
 ## Screenshots
 
 ![pfSense Dashboard](screenshots/pfsense-dashboard.png)
-*pfSense WebGUI dashboard — all 3 interfaces up*
+*pfSense WebGUI dashboard - all 3 interfaces up*
 
 ![Firewall Rules OPT1](screenshots/firewall-rules-opt1.png)
-*Firewall rules — Block DMZ to LAN (first), Allow DMZ to WAN (second)*
+*Firewall rules - Block DMZ to LAN (first), Allow DMZ to WAN (second)*
 
 ![Kali Ping Tests](screenshots/kali-ping-test.png)
-*Kali ping tests — LAN to DMZ to internet all working*
+*Kali ping tests - LAN to DMZ to internet all working*
 
 ![Ubuntu Ping Blocked](screenshots/ubuntu-ping-blocked.png)
 
-*Ubuntu DMZ to LAN — 100% packet loss, segmentation confirmed*
+*Ubuntu DMZ to LAN - 100% packet loss, segmentation confirmed*
 
 
 ## References
