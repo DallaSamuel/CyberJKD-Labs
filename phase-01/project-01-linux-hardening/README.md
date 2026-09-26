@@ -58,7 +58,7 @@ Ensures no known vulnerabilities exist before controls are applied.
 - `/etc/passwd` → `644` (readable by system, writable only by root)
 
 ### 5. Disable Unnecessary Services
-- Disabled `ModemManager` — irrelevant on a server with no modem
+- Disabled `ModemManager` - irrelevant on a server with no modem
 - All other 16 running services confirmed as legitimate system services
 
 ### 6. Empty Password Audit
@@ -73,20 +73,20 @@ Ensures no known vulnerabilities exist before controls are applied.
 
 ## Verification Tests
 
-### Before Hardening — Open Ports
+### Before Hardening - Open Ports
 ![Before Hardening](screenshots/before-hardening-ports.png)
 
 *Baseline scan showing port 22 (SSH) and port 53 (DNS) only*
 
-### After Hardening — Open Ports
+### After Hardening - Open Ports
 ![After Hardening](screenshots/after-hardening-ports.png)
 
-*Post-hardening scan — identical, confirming no new attack surface introduced*
+*Post-hardening scan - identical, confirming no new attack surface introduced*
 
 ### Firewall Status
 ![UFW Status](screenshots/ufw-status.png)
 
-*UFW active — default deny incoming, only port 22 allowed*
+*UFW active - default deny incoming, only port 22 allowed*
 
 ### SSH Verification from Kali
 ![SSH Verification](screenshots/ssh-verification.png)
@@ -107,7 +107,7 @@ The script performed all hardening steps in a single run:
 - Hardened SSH configuration
 - Configured UFW firewall
 - Set correct file permissions
-- Ran security checks — empty passwords, UID 0 audit, world-writable files
+- Ran security checks - empty passwords, UID 0 audit, world-writable files
 - Generated a timestamped report saved to `/var/log/`
 
 ### Script Output
@@ -135,11 +135,11 @@ These hardening controls eliminate those entry points:
 
 ## Lessons Learned
 
-- Always patch first before hardening — reduces known vulnerabilities immediately
+- Always patch first before hardening - reduces known vulnerabilities immediately
 - SSH must be explicitly allowed in UFW before enabling firewall or you lock yourself out
 - `prohibit-password` restricts root SSH login but `no` fully disables it — always use `no`
 - Restart SSH service after config changes or new settings don't apply
-- `passwd -l` locks root — use letter l not number 1
+- `passwd -l` locks root - use letter l not number 1
 - Clean Ubuntu Server 24.04 install has minimal unnecessary services by default
 
 ---
