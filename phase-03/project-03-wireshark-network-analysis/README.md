@@ -40,17 +40,17 @@ When a service goes down, a security alert fires, or a user reports slow perform
  
 ## What This Lab Added Beyond Phase 01
  
-Phase 01 Project 03 covered live traffic capture between lab VMs — protocol identification, anomaly flagging, structured analysis report.
+Phase 01 Project 03 covered live traffic capture between lab VMs - protocol identification, anomaly flagging, structured analysis report.
  
 This lab added:
  
 | Skill | What's new |
 |-------|-----------|
-| Display vs capture filters | Phase 01 used basic filters — this lab covers the full filter syntax used in production |
-| TCP stream reconstruction | Follow → TCP Stream — reassembling full conversations from individual packets |
+| Display vs capture filters | Phase 01 used basic filters - this lab covers the full filter syntax used in production |
+| TCP stream reconstruction | Follow → TCP Stream - reassembling full conversations from individual packets |
 | HTTP cleartext credential extraction | Extracting actual credentials from an unencrypted POST request |
-| DNS A record anatomy | Query/response matching by transaction ID — the invisible step before every connection |
-| tshark CLI | Command-line capture for remote servers — no GUI required |
+| DNS A record anatomy | Query/response matching by transaction ID - the invisible step before every connection |
+| tshark CLI | Command-line capture for remote servers - no GUI required |
  
 ---
  
@@ -69,7 +69,7 @@ This lab added:
 ## Key Concepts
  
 ### What is a packet?
-A packet is a small unit of data travelling across a network. Every email, web page, and API call gets broken into hundreds or thousands of packets — each with a header (source IP, destination IP, port) and a payload (the actual data). Wireshark captures and shows each individual packet.
+A packet is a small unit of data travelling across a network. Every email, web page, and API call gets broken into hundreds or thousands of packets - each with a header (source IP, destination IP, port) and a payload (the actual data). Wireshark captures and shows each individual packet.
  
 ### Display filters vs capture filters
 - **Capture filters** - applied before capturing, limits what gets recorded
@@ -109,13 +109,13 @@ dns
 - Expanded the Answers section in the packet detail pane _ confirmed A record IP matched nslookup terminal output
 **Screenshot:**
  
-![DNS Capture — Query and Response](screenshots/02-dns-capture-query-response.png)
+![DNS Capture - Query and Response](screenshots/02-dns-capture-query-response.png)
  
-**Real-world application:** Unexpected DNS queries in a capture — especially to unusual or newly registered domains — are often the first sign of malware calling home to a command and control server. This is exactly what SOC analysts look for in DNS logs.
+**Real-world application:** Unexpected DNS queries in a capture - especially to unusual or newly registered domains — are often the first sign of malware calling home to a command and control server. This is exactly what SOC analysts look for in DNS logs.
  
 ---
  
-## Exercise B — TCP Three-Way Handshake
+## Exercise B - TCP Three-Way Handshake
  
 **Objective:** Capture and identify the SYN → SYN-ACK → ACK connection setup sequence.
  
@@ -134,13 +134,13 @@ tcp and ip.addr == [example.com IP from nslookup]
  
 **Screenshot:**
  
-![TCP Three-Way Handshake — SYN SYN-ACK ACK](screenshots/03-tcp-three-way-handshake.png)
+![TCP Three-Way Handshake - SYN SYN-ACK ACK](screenshots/03-tcp-three-way-handshake.png)
  
 **Real-world application:** SYN with no SYN-ACK = server unreachable or port blocked. RST packet = connection forcibly closed. These two patterns are the first things network engineers look for when diagnosing connectivity failures.
  
 ---
  
-## Exercise C — Cleartext Credentials in HTTP
+## Exercise C - Cleartext Credentials in HTTP
  
 > ⚠️ **Educational exercise only.** Performed on a test environment I own. Never use this technique against systems you do not own or have explicit permission to analyse.
  
@@ -157,13 +157,13 @@ http.request.method == POST
 - Username and password visible in plaintext - exactly as typed into the login form
 **Screenshot:**
  
-![HTTP Cleartext Credentials — POST Request](screenshots/04-http-cleartext-credentials.png)
+![HTTP Cleartext Credentials - POST Request](screenshots/04-http-cleartext-credentials.png)
  
-**Real-world application:** Without TLS encryption, anyone on the network path — your ISP, a coffee shop router, anyone performing a man-in-the-middle attack - can read credentials exactly as typed. This is how security teams prove the vulnerability exists and demonstrate it to developers who resist adding HTTPS.
+**Real-world application:** Without TLS encryption, anyone on the network path - your ISP, a coffee shop router, anyone performing a man-in-the-middle attack - can read credentials exactly as typed. This is how security teams prove the vulnerability exists and demonstrate it to developers who resist adding HTTPS.
  
 ---
  
-## Exercise D — Follow TCP Stream
+## Exercise D - Follow TCP Stream
  
 **Objective:** Reconstruct a full HTTP conversation from individual packets using Follow → TCP Stream.
  
@@ -178,7 +178,7 @@ http.request.method == POST
 - Full HTTP headers visible - User-Agent, Host, Content-Type, cookies
 **Screenshot:**
  
-![TCP Stream Follow — Full Conversation Reconstructed](screenshots/05-tcp-stream-follow.png)
+![TCP Stream Follow - Full Conversation Reconstructed](screenshots/05-tcp-stream-follow.png)
  
 **Real-world application:** Individual packets are fragments. The stream view shows the complete conversation - what data was transferred, what commands were sent, what the server responded with. This is the core technique in incident investigation and forensic analysis.
  
@@ -231,10 +231,10 @@ http.request.method == POST
 This lab is **Phase 03 · Lab 02** of the CyberJKD Cloud Security Engineering roadmap.
  
 The Wireshark mental model built here transfers directly to:
-- **Azure Network Watcher** — flow logs, packet capture, connection troubleshoot
-- **Microsoft Sentinel** — network-based detection rules and KQL queries
-- **Phase 02** — Splunk SIEM log analysis (same analytical thinking, different tool)
-- **Phase 04** — offensive security network reconnaissance
+- **Azure Network Watcher** _ flow logs, packet capture, connection troubleshoot
+- **Microsoft Sentinel** _ network-based detection rules and KQL queries
+- **Phase 02** - Splunk SIEM log analysis (same analytical thinking, different tool)
+- **Phase 04** - offensive security network reconnaissance
 
   
 🌐 Full roadmap: [dallasamuel.github.io/CyberJKD-Roadmap](https://dallasamuel.github.io/CyberJKD-Roadmap)

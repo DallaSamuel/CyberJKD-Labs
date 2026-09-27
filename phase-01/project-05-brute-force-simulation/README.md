@@ -31,10 +31,10 @@ using UFW. Full attack and defence cycle documented.
 
 ## Tools Used
 
-- Hydra 9.6 (on Kali) — brute force tool
-- OpenSSH — target service
-- Python log parser (Project 04) — detection
-- UFW — blocking
+- Hydra 9.6 (on Kali) - brute force tool
+- OpenSSH - target service
+- Python log parser (Project 04) - detection
+- UFW - blocking
 
 ---
 
@@ -98,7 +98,7 @@ sudo ufw deny from 192.168.1.102 to any
 
 ![UFW Block Rule](screenshots/ufw-block-attacker.png)
 
-Verified block — Kali SSH attempt refused:
+Verified block - Kali SSH attempt refused:
 
 Permission denied, please try again.
 Connection closed by 192.168.1.103 port 22
@@ -134,8 +134,8 @@ Connection closed by 192.168.1.103 port 22
 - Hydra cracked dalla233 because it was in the wordlist
 - MaxAuthTries 3 limited attempts per connection but Hydra
   rotated connections to bypass it
-- Automated detection is essential — manual log review is too slow
-- Block by IP immediately after detection — don't wait
+- Automated detection is essential - manual log review is too slow
+- Block by IP immediately after detection - don't wait
 - Strong unique passwords not in common wordlists defeat Hydra
 
 ---
