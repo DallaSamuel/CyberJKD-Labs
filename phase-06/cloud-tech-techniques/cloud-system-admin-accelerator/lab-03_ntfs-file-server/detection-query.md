@@ -1,9 +1,9 @@
-# Detection Query — Denied File Access on FS01
+# Detection Query - Denied File Access on FS01
 
 ## Status: written, not yet validated against live data
 
 The Data Collection Rule (`dcr-fs01-security`) and its association with FS01 are deployed and
-active in the subscription — created directly via `az monitor data-collection rule create` and
+active in the subscription created directly via `az monitor data-collection rule create` and
 `az monitor data-collection rule association create`, **not through Terraform**. Same for the
 `AzureMonitorWindowsAgent` extension itself (`az vm extension set`). Neither is captured in this
 repo's `.tf` files, which is a real gap: a `terraform destroy` + `terraform apply` from this
@@ -14,15 +14,15 @@ What I'd Change for Production section.
 Separately, the agent *extension* reported `provisioningState: Succeeded`, but its Windows
 service never actually registered on FS01 (`Get-Service` found no matching service at all), so
 no event has shipped to the `law-fslab` workspace regardless of the Terraform question above.
-That's the second, independent gap — see the README's Troubleshooting Log (#8).
+That's the second, independent gap - see the README's Troubleshooting Log (#8).
 
 The underlying audit event is real and already verified directly against FS01's own Security
-log — a denied Finance access attempt by `tom.davis`, captured with `Get-WinEvent` during
+log - a denied Finance access attempt by `tom.davis`, captured with `Get-WinEvent` during
 testing. The queries below are what would run against the `Event` table once ingestion is
 working; they're written against the actual field layout of that captured event, not guessed
 syntax.
 
-## Query 1 — Recent denied file access attempts
+## Query 1 - Recent denied file access attempts
 
 ```kql
 Event
@@ -43,16 +43,16 @@ message text instead of making someone read the full event body.
 `contains` is used instead of `has` for the phrase and path checks throughout this document:
 `has` does word/term-boundary matching in KQL and is unreliable for multi-word phrases and
 strings containing punctuation like backslashes (a file path would get tokenized into pieces,
-not matched as one term). `contains` does a true substring match — slower on a large table, but
+not matched as one term). `contains` does a true substring match - slower on a large table, but
 correct regardless of how the text tokenizes.
 
 Scoped to `4656`/`4663` only, not `4660` (object deleted), even though the Data Collection Rule
-collects all three. A deletion event doesn't carry a "Not granted" reason — it only fires on
-success — so it would never match this filter anyway; the scoping here is deliberate (this is a
+collects all three. A deletion event doesn't carry a "Not granted" reason - it only fires on
+success - so it would never match this filter anyway; the scoping here is deliberate (this is a
 *denied-access* query), not an oversight. A separate query against `4660` alone would be the
 right way to track deletions specifically.
 
-## Query 2 — Denied attempts against a specific share
+## Query 2 - Denied attempts against a specific share
 
 ```kql
 Event
@@ -65,10 +65,10 @@ Event
 | order by TimeGenerated desc
 ```
 
-Narrows Query 1 to one share — this is the query that would have surfaced the `tom.davis`
+Narrows Query 1 to one share - this is the query that would have surfaced the `tom.davis`
 Finance denial automatically, the same event this lab confirmed manually.
 
-## Query 3 — Repeated-denial alert candidate
+## Query 3 - Repeated-denial alert candidate
 
 ```kql
 Event
@@ -82,7 +82,7 @@ Event
 
 Five or more denials from one account inside an hour is a reasonable first threshold for "this
 looks like probing, not an honest mistake." This is written as a query, not wired up as an
-actual Azure Monitor alert rule — the next step once ingestion is confirmed working would be
+actual Azure Monitor alert rule - the next step once ingestion is confirmed working would be
 turning this into a scheduled alert with an action group (email/Teams/PagerDuty) attached.
 
 ## What was actually verified (no Log Analytics required)
