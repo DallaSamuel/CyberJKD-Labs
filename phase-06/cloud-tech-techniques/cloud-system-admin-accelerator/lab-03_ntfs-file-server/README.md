@@ -162,6 +162,8 @@ Final Checkov result: **31 passed, 0 failed, 7 skipped with a written reason on 
 
 The working `.tf` files are in [`terraform/`](terraform/) - `backend.tf`, `versions.tf`, `variables.tf`, `main.tf`, `keyvault.tf`, `hardening.tf`, `outputs.tf`. Copy `terraform.tfvars.example` to `terraform.tfvars` and fill in your own values - don't retype from the screenshots above. The Checkov reports (`checkov-baseline.txt`, `checkov-after.txt`, `checkov-final.txt`) and the pre-hardening `icacls-baseline.txt` are included in the same folder as evidence.
 
+*Added in review:* Phase B evidence lives alongside - [`dcr-payload.json`](dcr-payload.json) (the Data Collection Rule used in step O), [`evidence/`](evidence/) (Azure-side state captured 21 Oct 2026) and [`collect-phaseb-evidence.ps1`](collect-phaseb-evidence.ps1), the read-only script that captured it. See Review Notes 2 and 4.
+
 ## Command Reference
 
 ```powershell
@@ -226,6 +228,8 @@ terraform destroy
 - [ ] Log Analytics ingestion — Data Collection Rule created and associated, but the Azure Monitor Agent service never registered on FS01; no event shipped. **Known, documented gap** — see below.
 - [ ] Checkov clean on the repo as committed: **no - 30 passed / 1 failed without the local tfvars, see Review Note 1**
 - [ ] Phase B changes (per-user passwords, AGDLP, ABE, FSRM, logon script, SACL) committed as code: **no - see Review Note 2**
+- [x] Per-user passwords exist in Key Vault - five `user-*-password` secrets, confirmed from Azure on 21 Oct 2026 ([evidence](evidence/01-azure-keyvault-identity-dcr.txt))
+- [x] Root cause of the Log Analytics gap identified - FS01 has no managed identity ([evidence](evidence/01-azure-keyvault-identity-dcr.txt), Review Note 4)
 - [ ] Orchestration script safe for any password: **no - placeholder substitution corrupts several special characters, see Review Note 3**
 
 ## Troubleshooting Log
@@ -262,6 +266,11 @@ I came back to this lab and checked it four ways: every screenshot, a **Checkov 
 
 No script for steps I-O (Key Vault per-user passwords, the `DL_*` groups and re-pointed ACLs, ABE, FSRM, the logon-script GPO, the SACLs) is committed, and none of the 26 screenshots shows them. The only Phase B evidence is the text and the `Get-WinEvent` output in `detection-query.md`. If the rotation happened as described, `P@ssw0rd123!` no longer works on these accounts, but a rebuild from this repo recreates it. Committing the Phase B scripts, plus `icacls` showing only `DL_*` groups, `Get-SmbShare` showing `AccessBased`, and `Get-FsrmQuota`, would make the strongest part of the lab provable.
 
+*Update - evidence collected 21 October 2026.* My laptop's working folder confirmed no Phase B scripts were ever saved: steps I-O were run interactively. So instead of writing scripts after the fact, I added a read-only collector, [`collect-phaseb-evidence.ps1`](collect-phaseb-evidence.ps1), and ran it against the live environment. By then the Azure subscription had been **disabled (read-only)**, so DC01 and FS01 could no longer be started, but the Azure-side metadata could still be read ([`evidence/01-azure-keyvault-identity-dcr.txt`](evidence/01-azure-keyvault-identity-dcr.txt)). It proves part of the claim:
+- **Step I is confirmed.** The vault holds `user-john-smith-password`, `user-lisa-white-password`, `user-mike-brown-password`, `user-sarah-jones-password` and `user-tom-davis-password` next to `vm-admin-password` - five per-user secrets, as described. They were created outside Terraform, so unlike `vm-admin-password` they have no expiry date or content type (the two Key Vault checks Checkov enforced on the Terraform-managed secret).
+- **Step O's configuration is committed** as [`dcr-payload.json`](dcr-payload.json), the Data Collection Rule actually used - `Microsoft-Event` stream, XPath filter on 4656/4663/4660, destination `law-fslab`.
+- **Steps J-N** (AGDLP, ABE, FSRM, logon-script GPO, SACLs) remain described but unproven from the repo; the collector's DC01 and FS01 sections would capture them if the subscription is re-enabled.
+
 **3. The password substitution in `configure-lab.ps1` corrupts some passwords.** `Invoke-VMScript` does `$script -replace $key, [regex]::Escape($value)`. `[regex]::Escape` adds backslashes, but the *replacement* side of `-replace` isn't a regex, so those backslashes land in the pushed script literally - inside a double-quoted string, where PowerShell also expands `$`. Tested under PowerShell 7.4 with the exact logic:
 
 | Password | What the VM receives | Result |
@@ -278,6 +287,8 @@ Passwords with only letters, digits and `!` survive, which is why this run worke
 Passing values with `az vm run-command invoke --parameters` avoids string surgery altogether.
 
 **4. The Azure Monitor Agent gap has a likely cause: no managed identity.** Microsoft's [AMA requirements](https://learn.microsoft.com/en-us/azure/azure-monitor/agents/azure-monitor-agent-requirements) state that a managed identity "must be enabled on Azure virtual machines". None of the three `azurerm_windows_virtual_machine` resources has an `identity` block, and the agent was added later with `az vm extension set`. Unless an identity was assigned separately, that alone stops any data reaching `law-fslab`. It's the first thing to check before calling the extension's success report false. It's also worth searching with a wildcard (`Get-Service *Monitor*`) rather than one exact display name. The README's "documented, unresolved gap" framing is the right call either way.
+
+*Update - confirmed 21 October 2026.* The [evidence file](evidence/01-azure-keyvault-identity-dcr.txt) shows FS01's `identity` is **empty** (no system- or user-assigned managed identity), while the `AzureMonitorWindowsAgent` extension (v1.45) reports `Succeeded`. That matches the symptom exactly: the extension installs, but the agent has no identity to authenticate to the Data Collection Rule and workspace with, so nothing ships. The fix is `az vm identity assign -g RG-FileServerLab -n FS01` - or, better, an `identity { type = "SystemAssigned" }` block on each VM in `main.tf`, with the agent, DCR and association moved into Terraform.
 
 **5. The baseline text doesn't match the captured baseline.** Step F says each share's ACL "held only its own department's global group". `terraform/icacls-baseline.txt` and screenshot 18 show:
 - `GRP_IT` with Full Control on **all four** shares;

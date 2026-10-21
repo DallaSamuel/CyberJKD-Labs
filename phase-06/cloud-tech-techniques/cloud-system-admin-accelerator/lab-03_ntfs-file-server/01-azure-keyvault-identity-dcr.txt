@@ -1,0 +1,24 @@
+Collected: 2026-10-21 07:59 by collect-phaseb-evidence.ps1 (read-only)
+Note: the subscription was disabled (read-only) at collection time, so DC01 and FS01
+could not be started; only Azure-side metadata could be read. The fourth section
+(Data Collection Rule associations) failed on a local Azure CLI extension permission
+error and is omitted here. Sections 1-3 below are unedited.
+
+== Key Vault 'kv-fslab-4252080b' - secret NAMES and expiry only (values are never read)
+Name                       Expires                    ContentType
+-------------------------  -------------------------  -------------
+user-john-smith-password
+user-lisa-white-password
+user-mike-brown-password
+user-sarah-jones-password
+user-tom-davis-password
+vm-admin-password          2027-01-01T00:00:00+00:00  text/plain
+
+
+== FS01 managed identity (null = none; the Azure Monitor Agent requires one)
+
+
+== FS01 VM extensions
+Name                      Version    State
+------------------------  ---------  ---------
+AzureMonitorWindowsAgent  1.45       Succeeded
