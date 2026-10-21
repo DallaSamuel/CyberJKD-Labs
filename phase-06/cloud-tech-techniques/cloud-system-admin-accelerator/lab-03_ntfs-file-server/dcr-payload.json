@@ -1,0 +1,33 @@
+﻿{
+    "dataSources":  {
+                        "windowsEventLogs":  [
+                                                 {
+                                                     "streams":  [
+                                                                     "Microsoft-Event"
+                                                                 ],
+                                                     "name":  "fileAccessEvents",
+                                                     "xPathQueries":  [
+                                                                          "Security!*[System[(EventID=4656 or EventID=4663 or EventID=4660)]]"
+                                                                      ]
+                                                 }
+                                             ]
+                    },
+    "dataFlows":  [
+                      {
+                          "destinations":  [
+                                               "law-fslab-dest"
+                                           ],
+                          "streams":  [
+                                          "Microsoft-Event"
+                                      ]
+                      }
+                  ],
+    "destinations":  {
+                         "logAnalytics":  [
+                                              {
+                                                  "name":  "law-fslab-dest",
+                                                  "workspaceResourceId":  "/subscriptions/62d96334-bbd8-4e04-b5c9-945c8b36f379/resourceGroups/RG-FileServerLab/providers/Microsoft.OperationalInsights/workspaces/law-fslab"
+                                              }
+                                          ]
+                     }
+}
