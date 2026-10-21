@@ -53,7 +53,7 @@ Every security team needs visibility. Without a SIEM, attacks happen silently - 
 | SIEM | Splunk Enterprise 9.4.1 |
 | Log Source | /var/log/auth.log (sourcetype `linux_auth`) |
 | NSG Rules | Port 22 (SSH) · Port 8000 (Splunk Web) |
-| Cost | $0 — covered by Azure free credits |
+| Cost | $0 - covered by Azure free credits |
 
 ## Architecture
 
