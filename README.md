@@ -63,7 +63,7 @@ Detection engineering and the vulnerability-to-remediation workflow on cloud VMs
 | Lab | Focus | Status |
 |-----|-------|--------|
 | [Splunk Enterprise SIEM](https://github.com/DallaSamuel/CyberJKD-Labs/tree/main/phase-02/project-01-splunk-siem-lab) | Splunk on Azure: ingest Linux auth logs, write SPL detections, build an alert and a monitoring dashboard | ✅ |
-| [Nessus Vulnerability Scanning](https://github.com/DallaSamuel/CyberJKD-Labs/tree/main/phase-02/project-02-nessus-vulnerability-scanning) | Unauthenticated vs credentialed scans on Azure — real CVEs, CVSS interpretation, remediation plan | ✅ |
+| [Nessus Vulnerability Scanning](https://github.com/DallaSamuel/CyberJKD-Labs/tree/main/phase-02/project-02-nessus-vulnerability-scanning) | Unauthenticated vs credentialed scans on Azure - real CVEs, CVSS interpretation, remediation plan | ✅ |
 | [ServiceNow Vulnerability Ticketing](https://github.com/DallaSamuel/CyberJKD-Labs/tree/main/phase-02/project-03-servicenow-vulnerabiity-ticketing) | Triaging and tracking 6 Nessus findings as incidents with a CVSS-to-priority mapping | ✅ |
 
 ### Phase 03 - Azure: Active Directory &amp; Network Analysis
