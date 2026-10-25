@@ -1,9 +1,9 @@
 # CYB 405 Lab 4 - System Hacking & Privilege Escalation Against an Isolated Ethical Hacking Lab
  
-![Status](https://img.shields.io/badge/Status-Complete-brightgreen)
-![Platform](https://img.shields.io/badge/Platform-VirtualBox-183A61)
-![OS](https://img.shields.io/badge/OS-Kali%20%7C%20Metasploitable2-0078D4)
-![CyberJKD](https://img.shields.io/badge/CyberJKD-Phase%2004%20·%20CYB%20405%20Lab%2004-ff8800)
+![Status](https://img.shields.io/badge/Status-Complete-brightgreen?style=flat-square)
+![Platform](https://img.shields.io/badge/Platform-VirtualBox-183A61?style=flat-square)
+![OS](https://img.shields.io/badge/OS-Kali%20%7C%20Metasploitable2-0078D4?style=flat-square)
+![CyberJKD](https://img.shields.io/badge/CyberJKD-Phase%2004%20·%20CYB%20405%20Lab%2004-ff8800?style=flat-square)
  
 **Author:** Dalla Samuel (CyberJKD)
  
@@ -73,6 +73,30 @@ Since the backdoor listener stays open on the target regardless of whether Metas
  
 ---
  
+## Architecture
+
+The isolated Host-Only environment from Labs 1–3 is reused unchanged. This is the first lab in the series to modify target state, so a dedicated pre-exploitation snapshot was taken before any exploitation began.
+
+![Lab 4 network topology — Kali attacker and the compromised Metasploitable2 target on the air-gapped Host-Only subnet; Windows Server unused](screenshots/cyb405_lab4_network_topology.png)
+
+The exploitation chain: a single service-level backdoor hands out root outright, so there is no separate privilege-escalation phase — followed by post-exploitation enumeration and the anti-forensics discovery in `/root`.
+
+![Lab 4 exploitation chain — vsftpd 2.3.4 backdoor to a root shell with no privilege escalation, then anti-forensics tooling found](screenshots/cyb405_lab4_exploitation_chain.png)
+
+```
+Kali Linux  192.168.56.102  (attacker)
+│
+└── exploit vsftpd 2.3.4  (port 21, backdoored build)  ──▶  Metasploitable2  192.168.56.101  (target)
+    ├── backdoor listener opens on port 6200   (Metasploit triggers it; nc connects directly — reliable path)
+    ├── root shell — uid=0 outright, so NO privilege-escalation step applies (documented, not invented)
+    ├── post-exploitation enum  → uname -a, /etc/passwd (~30 users, matching Lab 3), sudo -l, id
+    └── secondary finding in /root → .bash_history → /dev/null + reset_logs.sh (on-demand log-wiping)
+
+Pre-exploitation snapshot taken first · all activity confined to Host-Only vboxnet0 (192.168.56.0/24) — no internet path
+```
+
+---
+
 ## Exercise A - Exploit Research
  
 **Objective:** Confirm an exploit exists for the vsftpd 2.3.4 banner identified in Lab 2's recon.
@@ -249,6 +273,16 @@ Real infrastructure work involves real errors - documented here rather than edit
  
 ---
  
+## Review Notes (October 2026)
+
+A documentation pass in October 2026 checked this README against the captured evidence (meterpreter/netcat root session, enumeration output, `/root` listing, and the `reset_logs.sh` contents). The exploitation work is accurate and unchanged — the vsftpd 2.3.4 backdoor granting root outright, the port-6200 listener, the "no privilege-escalation phase applies" finding, and the anti-forensics discovery all match the screenshots. The changes below are additive only:
+
+- **Sections added.** An Architecture section (network-topology diagram + exploitation-chain diagram + ASCII tree) and this Review Notes section were added to match the standard lab format used across the repo. No exercise text, command, or finding was altered.
+- **Diagrams referenced.** `cyb405_lab4_network_topology.png` and `cyb405_lab4_exploitation_chain.png` already existed in `screenshots/` but were previously unreferenced; both are now surfaced in the Architecture section.
+- **Badges.** Switched to flat-square style for visual consistency with the other lab READMEs; the Phase badge already correctly read Phase 04.
+
+---
+
 ## What I'd Change for Production
  
 | Lab approach | Production reality |
