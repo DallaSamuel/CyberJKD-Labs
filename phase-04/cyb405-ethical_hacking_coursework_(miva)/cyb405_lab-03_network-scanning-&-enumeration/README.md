@@ -1,9 +1,9 @@
 # CYB 405 Lab 3 - Network Scanning & Enumeration Against an Isolated Ethical Hacking Lab
  
-![Status](https://img.shields.io/badge/Status-Complete-brightgreen)
-![Platform](https://img.shields.io/badge/Platform-VirtualBox-183A61)
-![OS](https://img.shields.io/badge/OS-Kali%20%7C%20Metasploitable2-0078D4)
-![CyberJKD](https://img.shields.io/badge/CyberJKD-Phase%2004%20·%20CYB%20405%20Lab%2003-ff8800)
+![Status](https://img.shields.io/badge/Status-Complete-brightgreen?style=flat-square)
+![Platform](https://img.shields.io/badge/Platform-VirtualBox-183A61?style=flat-square)
+![OS](https://img.shields.io/badge/OS-Kali%20%7C%20Metasploitable2-0078D4?style=flat-square)
+![CyberJKD](https://img.shields.io/badge/CyberJKD-Phase%2004%20·%20CYB%20405%20Lab%2003-ff8800?style=flat-square)
  
 **Author:** Dalla Samuel (CyberJKD)
  
@@ -81,6 +81,34 @@ SMB finding as reliable - a single tool's parsing quirks can produce a false neg
  
 ---
  
+## Architecture
+
+The isolated Host-Only environment from Labs 1–2 is reused unchanged; Windows Server (`.103`) stayed in a saved state for most of this lab to conserve host resources, so only Kali and Metasploitable2 were active.
+
+![Lab 3 network topology — Kali, Metasploitable2, and the saved-state Windows Server on the air-gapped Host-Only subnet](screenshots/cyb405_lab3_network_topology.png)
+
+The enumeration workflow layered on that network — the failed masscan attempt, the working nmap substitute, three independent SMB/RPC tools cross-checked against each other, and the vulnerability-scan export:
+
+![Lab 3 enumeration workflow — host discovery, cross-verified SMB/RPC enumeration, and vulnerability-scan export against Metasploitable2](screenshots/cyb405_lab3_architecture.png)
+
+```
+Kali Linux  192.168.56.102  (attacker)
+│
+├── Host discovery
+│   ├── masscan  (4 configs)   → FAILS: only the gateway (.1) seen — no real router on Host-Only
+│   └── nmap -sS -sV -p-         → 3 hosts up (working substitute)
+│
+└── Enumerate ──────────────▶  Metasploitable2  192.168.56.101  (target — Samba on 139/445)
+    ├── nmap --script smb-enum*  → 5 shares; anon READ/WRITE on IPC$ + tmp; 30 users (RID cycling)
+    ├── enum4linux -a            → same ~30 users; password policy: min len 5, no complexity, no lockout
+    ├── smbclient -L -N          → anonymous login OK; same 5 shares (third cross-check)
+    └── nmap --script vuln       → POODLE, Logjam, RMI RCE (1099), CCS injection, Slowloris, CSRF
+
+All traffic confined to Host-Only vboxnet0 (192.168.56.0/24) — no gateway, no NAT, no internet path
+```
+
+---
+
 ## Exercise A - Masscan Attempt & Documented Substitution
  
 **Objective:** Attempt the official lab document's masscan full-subnet sweep, and correctly diagnose and document
@@ -298,6 +326,16 @@ richest troubleshooting log of the series so far.
  
 ---
  
+## Review Notes (October 2026)
+
+A documentation pass in October 2026 checked this README against the lab's saved output files (`masscan_substitute_scan.*`, `smb_enum.*`, `enum4linux_output.txt`, `smbclient_shares.txt`, `vuln_scan.*`). The enumeration work is accurate and unchanged — the subnet sweep (3 hosts, 7,022.82 s), the anonymous READ/WRITE access on `IPC$` and `tmp`, the ~30 RID-cycled users with `msfadmin`/`user` active, the weak password policy (min length 5, no complexity, no lockout), and the vulnerability findings all match the saved artifacts. The changes below are additive only:
+
+- **Sections added.** An Architecture section (network-topology diagram + enumeration-workflow diagram + ASCII tree) and this Review Notes section were added to match the standard lab format used across the repo. No exercise text, command, or scan result was altered.
+- **Network-topology diagram added to the repo.** `cyb405_lab3_network_topology.png` previously existed only in the submitted portfolio; it has been added to the `screenshots/` folder and referenced in the Architecture section.
+- **Badges.** Switched to flat-square style for visual consistency with the other lab READMEs; the Phase badge already correctly read Phase 04.
+
+---
+
 ## What I'd Change for Production
  
 | Lab approach | Production reality |
