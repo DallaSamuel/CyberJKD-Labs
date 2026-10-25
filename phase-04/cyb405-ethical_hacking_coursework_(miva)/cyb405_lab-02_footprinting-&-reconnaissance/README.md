@@ -1,9 +1,9 @@
 # CYB 405 Lab 2 - Footprinting & Reconnaissance Against an Isolated Ethical Hacking Lab
  
-![Status](https://img.shields.io/badge/Status-Complete-brightgreen)
-![Platform](https://img.shields.io/badge/Platform-VirtualBox-183A61)
-![OS](https://img.shields.io/badge/OS-Kali%20%7C%20Metasploitable2-0078D4)
-![CyberJKD](https://img.shields.io/badge/CyberJKD-Phase%2006%20·%20CYB%20405%20Lab%2002-ff8800)
+![Status](https://img.shields.io/badge/Status-Complete-brightgreen?style=flat-square)
+![Platform](https://img.shields.io/badge/Platform-VirtualBox-183A61?style=flat-square)
+![OS](https://img.shields.io/badge/OS-Kali%20%7C%20Metasploitable2-0078D4?style=flat-square)
+![CyberJKD](https://img.shields.io/badge/CyberJKD-Phase%2004%20·%20CYB%20405%20Lab%2002-ff8800?style=flat-square)
  
 **Author:** Dalla Samuel (CyberJKD)
  
@@ -76,6 +76,30 @@ including the backdoored bindshell on 1524 - sit outside that range and would be
  
 ---
  
+## Architecture
+
+![Lab 2 reconnaissance workflow — passive OSINT and active recon against the isolated Metasploitable2 target](screenshots/cyb405_lab2_architecture.png)
+
+No new infrastructure was built for this lab — the Host-Only environment from Lab 1 is reused unchanged. The diagram above shows the *reconnaissance workflow* layered on that network: which techniques were attempted, which fail by design (the air-gapped WHOIS/DNS attempts), and which produced the findings that feed Labs 3–8.
+
+```
+Kali Linux  192.168.56.102  (attacker)
+│
+├── Passive OSINT
+│   ├── whois example.com      → FAILS: no internet route (air-gap working as designed)
+│   └── dig test.uni.local     → FAILS: no DNS resolver anywhere in the topology
+│
+└── Active recon ───────────▶  Metasploitable2  192.168.56.101  (target)
+    ├── nmap -sV   (Shodan-substitute banner grab)   → 22 service banners
+    ├── nmap -sS -sV -O -p1-65535   (full scan)      → 30 open ports + OS fingerprint
+    └── nikto -h http://…:80   (web vuln scan)       → 30 findings, 8,243 requests
+
+Reference only: Windows Server 192.168.56.103 (on-net for topology completeness; not a Lab 2 target)
+All traffic confined to Host-Only vboxnet0 (192.168.56.0/24) — no gateway, no NAT, no internet path
+```
+
+---
+
 ## Exercise A - WHOIS Lookup (Documented Air-Gap Limitation)
  
 **Objective:** Attempt WHOIS resolution from the isolated Kali attacker VM and correctly interpret the result.
@@ -132,7 +156,7 @@ nmap -sV -p 21,22,23,25,53,80,111,139,445,512,513,514,1524,2049,3306,5432,5900,6
 ```
  
 **What I captured:**
-- 21 classic Metasploitable2 ports enumerated with full version banners in 17.15 seconds
+- 22 classic Metasploitable2 ports enumerated with full version banners in 17.15 seconds
 - vsftpd 2.3.4 (the deliberately backdoored FTP daemon), UnrealIRCd, a live Metasploitable root bindshell on 1524, and Ruby DRb on 8787
 - Output verified saved: `shodan_banner_grab.txt` (1,660 bytes)
 **Screenshot:**
@@ -248,6 +272,17 @@ Real infrastructure work involves real errors - documented here rather than edit
  
 ---
  
+## Review Notes (October 2026)
+
+A documentation pass in October 2026 checked this README against the lab's saved output files and screenshots. The reconnaissance work itself is accurate and unchanged; the items below are small reference corrections.
+
+- **Phase badge corrected.** The CyberJKD status badge read "Phase 06"; this lab belongs to **Phase 04**, as the Roadmap link and the Connection-to-Roadmap section already stated. Badge updated to Phase 04.
+- **Shodan-substitute port count.** Exercise C read "21 classic Metasploitable2 ports"; the banner-grab command targets 22 ports and `shodan_banner_grab.txt` shows all 22 returning open with version banners. Corrected to 22.
+- **Sections added.** An Architecture section (reconnaissance-workflow diagram + ASCII tree) and this Review Notes section were added to match the standard lab format used across the repo. No exercise text, command, or scan result was altered.
+- **Duplicate topology asset.** A higher-resolution copy of the topology diagram (`cyb405_lab_network_topology.png`) sits in the screenshots folder alongside the one referenced in Exercise F (`06-network-topology.png`); left in place.
+
+---
+
 ## What I'd Change for Production
  
 | Lab approach | Production reality |
