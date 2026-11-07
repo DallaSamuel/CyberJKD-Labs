@@ -11,8 +11,8 @@
 | **Author** | Dalla Samuel |
 | **Date** | November 2026 |
 | **Platform** | OWASP Juice Shop (Docker) on an air-gapped VirtualBox lab |
-| **Lab Source** | CYB 405 — Introduction to Ethical Hacking (Miva Open University) |
-| **Roadmap** | [CyberJKD Roadmap](https://dallasamuel.github.io/CyberJKD-Roadmap) — Web Application Security |
+| **Lab Source** | CYB 405 - Introduction to Ethical Hacking (Miva Open University) |
+| **Roadmap** | [CyberJKD Roadmap](https://dallasamuel.github.io/CyberJKD-Roadmap) - Web Application Security |
 
 ---
 
@@ -22,22 +22,22 @@ Perform secure, controlled testing of the OWASP Juice Shop web application for *
 
 ## Business Problem
 
-Modern web applications expose REST APIs and user-input fields directly to the internet. A single unsanitised input can let an attacker bypass authentication, read an entire user database, or run code in another user's browser. This lab demonstrates — on an intentionally-vulnerable target — how those flaws are found and exploited, and how to fix them, so the same classes of bug can be recognised and prevented in real systems.
+Modern web applications expose REST APIs and user-input fields directly to the internet. A single unsanitised input can let an attacker bypass authentication, read an entire user database, or run code in another user's browser. This lab demonstrates - on an intentionally-vulnerable target - how those flaws are found and exploited, and how to fix them, so the same classes of bug can be recognised and prevented in real systems.
 
 ## Environment
 
 | Component | Detail |
 |---|---|
 | Host | Windows 11, 31 GB RAM, Oracle VirtualBox |
-| Attacker | Kali Linux 2026.1 — `192.168.56.102` |
-| Target | Ubuntu Server 24.04.4 LTS — `192.168.56.104` |
+| Attacker | Kali Linux 2026.1 - `192.168.56.102` |
+| Target | Ubuntu Server 24.04.4 LTS - `192.168.56.104` |
 | Target App | OWASP Juice Shop via Docker 29.1.3 (`bkimminich/juice-shop`) |
 | Network | VirtualBox Host-Only `192.168.56.0/24`, DHCP disabled, static IPs, **air-gapped** |
 | Tools | gobuster 3.8.2, Burp Suite Community 2026.7.2, curl, Firefox/Chromium |
 
 ## Architecture
 
-![Attack Topology](architecture.png)
+![Attack Topology](img/architecture.png)
 
 ```
 Physical Host (Windows 11, VirtualBox)
@@ -54,10 +54,10 @@ Physical Host (Windows 11, VirtualBox)
 
 ## Key Concepts
 
-- **SQL Injection (SQLi)** — untrusted input concatenated into a SQL query, allowing an attacker to alter the query's logic (authentication bypass) or append a `UNION SELECT` to read other tables (data exfiltration).
-- **UNION column matching** — a `UNION`-based injection must return the same number of columns as the original query; an `ORDER BY n` probe reveals that count.
-- **DOM-based XSS** — user input reflected into the page DOM without encoding, so the browser executes it as live code.
-- **Broken Access Control** — resources served without an authorisation check (here, an open `/ftp` directory listing).
+- **SQL Injection (SQLi)** - untrusted input concatenated into a SQL query, allowing an attacker to alter the query's logic (authentication bypass) or append a `UNION SELECT` to read other tables (data exfiltration).
+- **UNION column matching** - a `UNION`-based injection must return the same number of columns as the original query; an `ORDER BY n` probe reveals that count.
+- **DOM-based XSS** - user input reflected into the page DOM without encoding, so the browser executes it as live code.
+- **Broken Access Control** - resources served without an authorisation check (here, an open `/ftp` directory listing).
 
 ## Walkthrough Summary
 
@@ -66,8 +66,8 @@ Physical Host (Windows 11, VirtualBox)
 | A | Infrastructure build | Juice Shop container on static `.104`, air-gapped, `clean-base` snapshot |
 | B | Endpoint enumeration | gobuster + Burp site-map; found `/ftp`, `/rest/products/search`, `/rest/user/login` |
 | C | Sensitive data exposure | `/ftp` lists confidential files + a KeePass vault, no auth |
-| D | SQLi — auth bypass | Logged in as `admin@juice-sh.op` with `' or 1=1-- ` |
-| E | SQLi — data exfiltration | UNION injection dumped **24 user credentials** (emails + MD5 hashes) |
+| D | SQLi - auth bypass | Logged in as `admin@juice-sh.op` with `' or 1=1-- ` |
+| E | SQLi - data exfiltration | UNION injection dumped **24 user credentials** (emails + MD5 hashes) |
 | F | DOM XSS | `<iframe src="javascript:alert('xss')">` executed in the app context |
 
 > Full step-by-step discovery walkthrough: see **[VIEWER-GUIDE.md](VIEWER-GUIDE.md)**.
@@ -105,11 +105,11 @@ qwert')) UNION SELECT id, email, password, '4','5','6','7','8','9','10' FROM Use
 
 | # | Finding | OWASP | Severity |
 |---|---|---|---|
-| 1 | SQLi — authentication bypass (login) | A03 Injection | Critical |
-| 2 | SQLi — UNION data exfiltration (24 credentials) | A03 Injection | Critical |
-| 3 | Sensitive data exposure — unauthenticated `/ftp` | A01 Broken Access Control | High |
+| 1 | SQLi - authentication bypass (login) | A03 Injection | Critical |
+| 2 | SQLi - UNION data exfiltration (24 credentials) | A03 Injection | Critical |
+| 3 | Sensitive data exposure - unauthenticated `/ftp` | A01 Broken Access Control | High |
 | 4 | DOM-based XSS (search field) | A03 Injection (XSS) | High |
-| 5 | Weak password storage — unsalted MD5 | A02 Cryptographic Failures | High |
+| 5 | Weak password storage - unsalted MD5 | A02 Cryptographic Failures | High |
 | 6 | Verbose errors leaking backend SQL | A05 Security Misconfiguration | Medium |
 
 ## Remediation
@@ -128,7 +128,7 @@ qwert')) UNION SELECT id, email, password, '4','5','6','7','8','9','10' FROM Use
 - [x] Endpoints enumerated (gobuster + Burp site-map)
 - [x] `/ftp` sensitive data exposure confirmed
 - [x] SQLi authentication bypass (admin login) confirmed
-- [x] SQLi UNION dump — 24 credentials extracted
+- [x] SQLi UNION dump - 24 credentials extracted
 - [x] DOM XSS payload executed
 - [x] Remediations documented for every finding
 
@@ -143,10 +143,10 @@ qwert')) UNION SELECT id, email, password, '4','5','6','7','8','9','10' FROM Use
 
 ## Connection to Roadmap
 
-This lab reinforces the **Web Application Security** competency on the CyberJKD roadmap — injection testing, proxy-based application mapping, and vulnerability remediation — core skills for the Cloud Security Engineer / SOC Analyst track.
+This lab reinforces the **Web Application Security** competency on the CyberJKD roadmap - injection testing, proxy-based application mapping, and vulnerability remediation - core skills for the Cloud Security Engineer / SOC Analyst track.
 
 ---
 
 *All testing was performed against a self-built, air-gapped OWASP Juice Shop instance published by OWASP for training. No production system or real data was involved.*
 
-**CyberJKD — Becoming dangerous through fundamentals.**
+**CyberJKD - Becoming dangerous through fundamentals.**
