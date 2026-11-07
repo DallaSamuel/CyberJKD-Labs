@@ -1,4 +1,4 @@
-# CYB 405 — Lab 6: Web Application Hacking (SQL Injection & XSS)
+# CYB 405 - Lab 6: Web Application Hacking (SQL Injection & XSS)
 
 ![Platform](https://img.shields.io/badge/Platform-OWASP%20Juice%20Shop-f0a73d?style=flat-square)
 ![Attacker](https://img.shields.io/badge/Attacker-Kali%20Linux-557C94?style=flat-square&logo=kalilinux&logoColor=white)
