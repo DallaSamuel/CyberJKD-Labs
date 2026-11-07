@@ -1,6 +1,6 @@
-# Viewer Step-by-Step Guide — Lab 6: Web App Hacking (SQLi & XSS)
+# Viewer Step-by-Step Guide - Lab 6: Web App Hacking (SQLi & XSS)
 
-> A follow-along walkthrough of how this lab was actually done — including the dead-ends and how they were solved. Target: a self-built, air-gapped OWASP Juice Shop. Attacker: Kali Linux.
+> A follow-along walkthrough of how this lab was actually done - including the dead-ends and how they were solved. Target: a self-built, air-gapped OWASP Juice Shop. Attacker: Kali Linux.
 
 ---
 
@@ -117,4 +117,4 @@ A JavaScript `alert` saying `xss` fires — the app rendered your input as live 
 
 *Self-built, air-gapped OWASP Juice Shop. No production system or real data involved.*
 
-**CyberJKD — Becoming dangerous through fundamentals.**
+**CyberJKD - Becoming dangerous through fundamentals.**
