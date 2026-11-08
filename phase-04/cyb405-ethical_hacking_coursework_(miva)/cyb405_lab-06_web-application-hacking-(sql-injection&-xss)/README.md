@@ -37,7 +37,7 @@ Modern web applications expose REST APIs and user-input fields directly to the i
 
 ## Architecture
 
-![Attack Topology](./img/lab6_architecture.png)
+![Attack Topology](architecture.png)
 
 ```
 Physical Host (Windows 11, VirtualBox)
