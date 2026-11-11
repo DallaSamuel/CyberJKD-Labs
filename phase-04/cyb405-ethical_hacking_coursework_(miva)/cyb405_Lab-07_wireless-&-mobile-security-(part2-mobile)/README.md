@@ -10,7 +10,7 @@
 | | |
 |---|---|
 | **Author** | Dalla Samuel |
-| **Date** | November 2026 |
+| **Date** | 11th November 2026 |
 | **Platform** | InsecureBankv2 (OWASP vulnerable app) on an air-gapped Kali VM |
 | **Lab Source** | CYB 405 - Introduction to Ethical Hacking (Miva Open University) |
 | **Roadmap** | [CyberJKD Roadmap](https://dallasamuel.github.io/CyberJKD-Roadmap) - Phase 04, Mobile Security |
