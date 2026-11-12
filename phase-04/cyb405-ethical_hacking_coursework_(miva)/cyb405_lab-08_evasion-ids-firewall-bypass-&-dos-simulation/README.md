@@ -10,7 +10,7 @@
 | | |
 |---|---|
 | **Author** | Dalla Samuel |
-| **Date** | November 2026 |
+| **Date** | 12 November 2026 |
 | **Platform** | Kali -> Metasploitable2 on an air-gapped VirtualBox lab |
 | **Lab Source** | CYB 405 - Introduction to Ethical Hacking (Miva Open University) |
 | **Roadmap** | [CyberJKD Roadmap](https://dallasamuel.github.io/CyberJKD-Roadmap) - Phase 04 |
