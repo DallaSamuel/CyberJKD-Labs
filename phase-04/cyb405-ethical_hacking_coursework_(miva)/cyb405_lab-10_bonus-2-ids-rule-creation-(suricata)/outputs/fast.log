@@ -1,0 +1,2 @@
+11/12/2026-03:59:14.663021  [**] [1:1000001:1] CYB405 Malware C2 Beacon - EvilRAT gate.php check-in [**] [Classification: A Network Trojan was detected] [Priority: 1] {TCP} 127.0.0.1:58992 -> 127.0.0.1:8000
+11/12/2026-03:59:14.663021  [**] [1:1000002:1] CYB405 Suspicious User-Agent - EvilRAT [**] [Classification: A Network Trojan was detected] [Priority: 1] {TCP} 127.0.0.1:58992 -> 127.0.0.1:8000

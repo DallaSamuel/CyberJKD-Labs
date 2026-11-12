@@ -1,0 +1,8 @@
+# CYB 405 - Bonus 2: Suricata rules to detect a sample malware C2 beacon.
+# Target pattern: an HTTP GET to /gate.php carrying the malware User-Agent "EvilRAT".
+
+# Rule 1 - precise: method + URI + User-Agent all must match (low false positives)
+alert http any any -> any any (msg:"CYB405 Malware C2 Beacon - EvilRAT gate.php check-in"; flow:to_server,established; http.method; content:"GET"; http.uri; content:"/gate.php"; nocase; http.user_agent; content:"EvilRAT"; nocase; classtype:trojan-activity; sid:1000001; rev:1;)
+
+# Rule 2 - broad: any request advertising the EvilRAT User-Agent
+alert http any any -> any any (msg:"CYB405 Suspicious User-Agent - EvilRAT"; flow:to_server,established; http.user_agent; content:"EvilRAT"; nocase; classtype:trojan-activity; sid:1000002; rev:1;)
